@@ -1,11 +1,15 @@
 package com.chuck.joke
 
-//import com.chucknorris.jokes.ChuckNorrisService
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.chuck.data.ChuckJokeRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class JokeViewModel @Inject constructor() : ViewModel() {
+class JokeViewModel @Inject constructor(private val jokeRepository: ChuckJokeRepository) : ViewModel() {
 
     private val _state = MutableLiveData<JokeState>()
     val state: MutableLiveData<JokeState>
@@ -18,12 +22,12 @@ class JokeViewModel @Inject constructor() : ViewModel() {
     }
 
     fun loadJoke() {
-        /*_state.value = JokeState.Loading
+        _state.value = JokeState.Loading
         viewModelScope.launch {
-            val jokeText = withContext(Dispatchers.IO) {
-                service.getRandomJoke()
+            val jokeResponse = withContext(Dispatchers.IO) {
+                jokeRepository.getRandomJoke()
             }
-            _state.value = JokeState.Success(jokeText)
-        }*/
+//            _state.value = JokeState.Success(jokeResponse.)
+        }
     }
 }
