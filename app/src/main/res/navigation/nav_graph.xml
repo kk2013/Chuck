@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+    app:startDestination="@id/main_fragment">
+
+    <fragment
+        android:id="@+id/joke_fragment"
+        android:name="com.chuck.joke.JokeFragment"
+        android:label="Joke" />
+    <fragment
+        android:id="@+id/jokes_fragment"
+        android:name="com.chuck.jokes.JokesFragment"
+        android:label="Jokes" />
+    <fragment
+        android:id="@+id/main_fragment"
+        android:name="com.chuck.intro.IntroFragment"
+        android:label="Chuck Norris Jokes" >
+        <action
+            android:id="@+id/action_main_fragment_to_joke_fragment"
+            app:destination="@id/joke_fragment" />
+        <action
+            android:id="@+id/action_main_fragment_to_jokes_fragment"
+            app:destination="@id/jokes_fragment" />
+    </fragment>
+</navigation>

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Chuck Norris Forever</string>
+    <string name="random_joke">Random joke</string>
+    <string name="custom_name">Custom name joke</string>
+    <string name="jokes">Jokes</string>
+    <string name="title_text">Chuck Norris Jokes</string>
+    <string name="joke_text">Text for the joke screen</string>
+    <string name="jokes_text">Will be a list of jokes</string>
+</resources>
