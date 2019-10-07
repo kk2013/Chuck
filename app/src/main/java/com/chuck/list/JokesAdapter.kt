@@ -5,30 +5,37 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chuck.R
+import com.chuck.databinding.JokeItemRowBinding
 import com.chuck.model.Joke
 import kotlinx.android.synthetic.main.joke_item_row.view.*
 
 
-class JokesAdapter(private val jokes: List<Joke>) : RecyclerView.Adapter<JokesAdapter.ViewHolder>() {
+class JokesAdapter() :
+    RecyclerView.Adapter<JokesAdapter.ViewHolder>() {
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = jokes[position].run {
-        holder.updateText(this)
+    var jokes: List<Joke> = emptyList()
+
+    fun loadJokes(jokes: List<Joke>) {
+        this.jokes = jokes
     }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(jokes[position])
 
     override fun getItemCount(): Int = jokes.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return LayoutInflater.from(parent.context).inflate(R.layout.joke_item_row, parent, false).run {
-            ViewHolder(this)
-        }
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = JokeItemRowBinding.inflate(inflater)
+        return ViewHolder(binding)
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(binding: JokeItemRowBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        internal fun updateText(joke: Joke) {
-//            itemView.joke_text.text = joke.jokeString
+        fun bind(joke: Joke) {
+            with(itemView) {
+                joke_text.text = joke.joke
+            }
         }
     }
-
 
 }

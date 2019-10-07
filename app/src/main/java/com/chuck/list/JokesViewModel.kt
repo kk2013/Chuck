@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chuck.data.ChuckJokeRepository
-import com.chuck.joke.JokeViewModel
 import com.chuck.model.Joke
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -12,6 +11,8 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class JokesViewModel @Inject constructor(private val jokeRepository: ChuckJokeRepository) : ViewModel() {
+
+
 
     private val _state = MutableLiveData<JokesState>()
     val state: MutableLiveData<JokesState>
