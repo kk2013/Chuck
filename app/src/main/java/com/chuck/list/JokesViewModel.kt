@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chuck.data.ChuckJokeRepository
+import com.chuck.joke.JokeViewModel
 import com.chuck.model.Joke
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,6 +19,7 @@ class JokesViewModel @Inject constructor(private val jokeRepository: ChuckJokeRe
 
     sealed class JokesState {
         object Loading : JokesState()
+        object Loaded : JokesState()
         object Empty : JokesState()
         data class Success(val jokes: List<Joke>) : JokesState()
     }
@@ -28,6 +30,7 @@ class JokesViewModel @Inject constructor(private val jokeRepository: ChuckJokeRe
             val jokesResponse = withContext(Dispatchers.IO) {
                 jokeRepository.getJokes(5)
             }
+            _state.value = JokesState.Loaded
             _state.value = JokesState.Success(jokesResponse.value)
         }
     }
