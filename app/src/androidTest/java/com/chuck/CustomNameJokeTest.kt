@@ -1,4 +1,4 @@
-package com.chuck
+package com.chuckh
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click

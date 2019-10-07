@@ -20,5 +20,5 @@ abstract class JokeModule {
     @Binds
     @IntoMap
     @ViewModelKey(JokeViewModel::class)
-    abstract fun bindViewModel(viewmodel: JokeViewModel): ViewModel
+    abstract fun bindViewModel(viewModel: JokeViewModel): ViewModel
 }

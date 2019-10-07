@@ -1,9 +1,6 @@
 package com.chuck.di
 
 import androidx.lifecycle.ViewModel
-import com.chuck.intro.IntroFragment
-import com.chuck.joke.JokeFragment
-import com.chuck.joke.JokeViewModel
 import com.chuck.jokes.JokesFragment
 import com.chuck.list.JokesViewModel
 import dagger.Binds
@@ -22,5 +19,5 @@ abstract class JokesModule {
     @Binds
     @IntoMap
     @ViewModelKey(JokesViewModel::class)
-    abstract fun bindViewModel(viewmodel: JokesViewModel): ViewModel
+    abstract fun bindViewModel(viewModel: JokesViewModel): ViewModel
 }

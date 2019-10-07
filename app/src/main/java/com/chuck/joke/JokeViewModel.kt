@@ -27,7 +27,7 @@ class JokeViewModel @Inject constructor(private val jokeRepository: ChuckJokeRep
             val jokeResponse = withContext(Dispatchers.IO) {
                 jokeRepository.getRandomJoke()
             }
-//            _state.value = JokeState.Success(jokeResponse.)
+            _state.value = JokeState.Success(jokeResponse.value.joke)
         }
     }
 }

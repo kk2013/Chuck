@@ -2,10 +2,12 @@ package com.chuck.joke
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.chuck.di.ChuckViewModelFactory
 import com.chuck.databinding.FragmentJokeBinding
@@ -24,24 +26,12 @@ class JokeFragment : Fragment() {
         AndroidSupportInjection.inject(this)
     }
 
-    private fun onJokeStateChange(state: JokeViewModel.JokeState?) {
-        when (val jokeState = state!!) {
-            is JokeViewModel.JokeState.Loading -> showLoading()
-            is JokeViewModel.JokeState.Empty -> showEmptyState()
-            is JokeViewModel.JokeState.Success -> showJoke()
-        }
-    }
-
-    private fun showJoke() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     private fun showEmptyState() {
-
+        //TODO Error handling
     }
 
     private fun showLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //TODO Implement loading
     }
 
     override fun onCreateView(
@@ -57,6 +47,13 @@ class JokeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         jokeViewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(JokeViewModel::class.java)
+        jokeViewModel.state.observe(this, Observer {
+            when (it) {
+                is JokeViewModel.JokeState.Loading -> showLoading()
+                is JokeViewModel.JokeState.Empty -> showEmptyState()
+                is JokeViewModel.JokeState.Success -> Log.i("JOKE", it.jokeText)
+            }
+        })
         jokeViewModel.loadJoke()
     }
 }

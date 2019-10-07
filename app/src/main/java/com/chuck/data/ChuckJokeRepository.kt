@@ -6,4 +6,6 @@ import javax.inject.Inject
 class ChuckJokeRepository @Inject constructor(private val service: ChuckJokeService) {
 
     suspend fun getRandomJoke() = service.getRandomJoke()
+
+    suspend fun getJokes(numberOfJokes: Int) = service.getJokes(numberOfJokes)
 }
