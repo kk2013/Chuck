@@ -1,5 +1,6 @@
 package com.chuck.di
 
+import com.chuck.BuildConfig
 import com.chuck.api.ChuckJokeService
 import com.chuck.utils.LiveDataCallAdapterFactory
 import dagger.Module
@@ -19,7 +20,8 @@ class NetworkModule {
     private val BASE_URL = "http://api.icndb.com"
 
     private val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
-        this.level = HttpLoggingInterceptor.Level.BASIC
+        this.level = if(BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.BASIC
+
     }
 
     @Provides

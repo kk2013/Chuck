@@ -27,6 +27,8 @@ class RandomJokeTest {
     @Test
     fun jokesDisplayed() {
 
+        val jsonBody = asset()
+
         onView(withId(R.id.random_joke_button)).perform(click())
         onView(withId(R.id.joke_text))
             .check(matches(withText("Text for the joke screen")))
