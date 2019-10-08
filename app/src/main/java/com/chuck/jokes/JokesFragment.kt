@@ -47,7 +47,7 @@ class JokesFragment : DaggerFragment() {
                 is JokesViewModel.JokesState.Loading -> binding.progressBar.visibility =
                     View.VISIBLE
                 is JokesViewModel.JokesState.Loaded -> binding.progressBar.visibility = View.GONE
-//                is JokesViewModel.JokesState.Empty ->
+//                is JokesViewModel.JokesState.Failed ->
                 is JokesViewModel.JokesState.Success -> {
                     for (joke in it.jokes) {
                         Log.i("JOKE", joke.joke)

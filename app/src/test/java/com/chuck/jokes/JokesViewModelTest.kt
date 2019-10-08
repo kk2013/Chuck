@@ -1,4 +1,4 @@
-package com.chuck.joke
+package com.chuck.jokes
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
@@ -8,6 +8,7 @@ import com.chuck.data.ChuckJokeRepository
 import com.chuck.list.JokesViewModel
 import com.chuck.model.JokesResponse
 import com.nhaarman.mockito_kotlin.whenever
+import com.chuck.list.JokesViewModel.JokesState.Failed
 import com.chuck.list.JokesViewModel.JokesState.Loaded
 import com.chuck.list.JokesViewModel.JokesState.Loading
 import com.chuck.list.JokesViewModel.JokesState.Success
@@ -21,6 +22,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
+import retrofit2.HttpException
 
 class JokesViewModelTest {
 
@@ -34,6 +36,8 @@ class JokesViewModelTest {
     lateinit var mockJokeRepository: ChuckJokeRepository
     @Mock
     lateinit var mockJokesResponse: JokesResponse
+    @Mock
+    lateinit var mockHttpException: HttpException
 
     private lateinit var observer: Observer<JokesViewModel.JokesState>
 
@@ -57,6 +61,24 @@ class JokesViewModelTest {
     }
 
     @Test
+    fun `testFailed`() = coroutineTestRule.runBlockingTest {
+
+        val jokes = emptyList<Joke>()
+
+        whenever(mockJokeRepository.getJokes(any())).thenThrow(mockHttpException)
+        whenever(mockJokesResponse.value).thenReturn(jokes)
+
+        jokesViewModel.state.observeForever(observer)
+
+        jokesViewModel.loadJokes()
+
+        assertEquals(3, actualValues.size)
+        assertEquals(Loading, actualValues[0])
+        assertEquals(Failed, actualValues[1])
+        assertEquals(Loaded, actualValues[2])
+    }
+
+    @Test
     fun `testSuccess`() = coroutineTestRule.runBlockingTest {
 
         val jokes = emptyList<Joke>()
@@ -70,7 +92,7 @@ class JokesViewModelTest {
 
         assertEquals(3, actualValues.size)
         assertEquals(Loading, actualValues[0])
-        assertEquals(Loaded, actualValues[1])
-        assertEquals(Success(jokes), actualValues[2])
+        assertEquals(Success(jokes), actualValues[1])
+        assertEquals(Loaded, actualValues[2])
     }
 }

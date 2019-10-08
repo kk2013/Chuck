@@ -35,7 +35,7 @@ class JokeFragment : DaggerFragment() {
             when (it) {
                 is JokeViewModel.JokeState.Loading -> binding.progressBar.visibility = View.VISIBLE
                 is JokeViewModel.JokeState.Loaded -> binding.progressBar.visibility = View.GONE
-//                is JokeViewModel.JokeState.Empty -> showEmptyState()
+//                is JokeViewModel.JokeState.Failed -> showEmptyState()
                 is JokeViewModel.JokeState.Success -> {
                     binding.joke = it.jokeText
                     Log.i("JOKE", it.jokeText)
