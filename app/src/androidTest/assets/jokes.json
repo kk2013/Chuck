@@ -1,0 +1,30 @@
+{
+  "type": "success",
+  "value": [
+    {
+      "id": 103,
+      "joke": "Chuck Norris and Mr. T walked into a bar. The bar was instantly destroyed, as that level of awesome cannot be contained in one building.",
+      "categories": []
+    },
+    {
+      "id": 65,
+      "joke": "When Chuck Norris was denied an Egg McMuffin at McDonald's because it was 10:35, he roundhouse kicked the store so hard it became a Wendy's.",
+      "categories": []
+    },
+    {
+      "id": 40,
+      "joke": "A handicapped parking sign does not signify that this spot is for handicapped people. It is actually in fact a warning, that the spot belongs to Chuck Norris and that you will be handicapped if you park there.",
+      "categories": []
+    },
+    {
+      "id": 346,
+      "joke": "Every time Chuck Norris smiles, someone dies. Unless he smiles while he?s roundhouse kicking someone in the face. Then two people die.",
+      "categories": []
+    },
+    {
+      "id": 591,
+      "joke": "There is no April 1st in Chuck Norris' calendar, because no one can fool him.",
+      "categories": []
+    }
+  ]
+}

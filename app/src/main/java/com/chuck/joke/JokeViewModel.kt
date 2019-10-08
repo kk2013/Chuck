@@ -1,15 +1,17 @@
 package com.chuck.joke
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chuck.data.ChuckJokeRepository
+import com.chuck.di.CoroutineContextProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class JokeViewModel @Inject constructor(private val jokeRepository: ChuckJokeRepository) : ViewModel() {
+class JokeViewModel @Inject constructor(private val jokeRepository: ChuckJokeRepository, private val contextProvider: CoroutineContextProvider) : ViewModel() {
 
     private val _state = MutableLiveData<JokeState>()
     val state: MutableLiveData<JokeState>
@@ -25,7 +27,7 @@ class JokeViewModel @Inject constructor(private val jokeRepository: ChuckJokeRep
     fun loadJoke() {
         _state.value = JokeState.Loading
         viewModelScope.launch {
-            val jokeResponse = withContext(Dispatchers.IO) {
+            val jokeResponse = withContext(contextProvider.IO) {
                 jokeRepository.getRandomJoke()
             }
             _state.value = JokeState.Loaded
