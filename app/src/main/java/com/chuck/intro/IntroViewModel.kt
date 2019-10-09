@@ -5,11 +5,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chuck.data.ChuckJokeRepository
 import com.chuck.di.CoroutineContextProvider
+import com.chuck.utils.Constants
+import com.chuck.utils.Constants.Companion.TIMEOUT
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.withTimeoutOrNull
 import javax.inject.Inject
 
-class IntroViewModel @Inject constructor(private val jokeRepository: ChuckJokeRepository, private val contextProvider: CoroutineContextProvider) : ViewModel() {
+class IntroViewModel @Inject constructor(
+    private val jokeRepository: ChuckJokeRepository,
+    private val contextProvider: CoroutineContextProvider
+) : ViewModel() {
 
     private val _state = MutableLiveData<IntroState>()
     val state: MutableLiveData<IntroState>
@@ -22,19 +29,19 @@ class IntroViewModel @Inject constructor(private val jokeRepository: ChuckJokeRe
         data class Success(val jokeText: String) : IntroState()
     }
 
-    fun loadJoke() {
+    fun loadJoke() = viewModelScope.launch {
         _state.value = IntroState.Loading
-        viewModelScope.launch {
-            try {
-                val jokeResponse = withContext(contextProvider.IO) {
+        try {
+            val jokeResponse = withTimeout(TIMEOUT) {
+                withContext(contextProvider.IO) {
                     jokeRepository.getRandomJoke()
                 }
-                _state.value =
-                    IntroState.Success(jokeResponse.value.joke)
-            } catch (ex: Exception) {
-                _state. value = IntroState.Failed
             }
-            _state.value = IntroState.Loaded
+            _state.value =
+                IntroState.Success(jokeResponse.value.joke)
+        } catch (ex: Exception) {
+            _state.value = IntroState.Failed
         }
+        _state.value = IntroState.Loaded
     }
 }
