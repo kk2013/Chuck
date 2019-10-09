@@ -8,12 +8,12 @@ import retrofit2.http.Query
 
 interface ChuckJokeService {
 
-    @GET("/jokes/random")
+    @GET("/jokes/random?escape=javascript")
     suspend fun getRandomJoke(): JokeResponse
 
-    @GET("/jokes/random")
+    @GET("/jokes/random?escape=javascript")
     suspend fun getCustomNameJoke(@Query("firstName") firstName: String): JokeResponse
 
-    @GET("/jokes/random/{numberOfJokes}")
+    @GET("/jokes/random/{numberOfJokes}?escape=javascript")
     suspend fun getJokes(@Path("numberOfJokes") numberOfJokes: Int): JokesResponse
 }

@@ -33,7 +33,7 @@ class JokesViewModel @Inject constructor(
         try {
             val jokesResponse = withTimeout(TIMEOUT) {
                 withContext(contextProvider.IO) {
-                    jokeRepository.getJokes(5)
+                    jokeRepository.getJokes(NUMBER_OF_JOKES)
                 }
             }
             _state.value = JokesState.Success(jokesResponse.value)
@@ -41,5 +41,9 @@ class JokesViewModel @Inject constructor(
             _state.value = JokesState.Failed
         }
         _state.value = JokesState.Loaded
+    }
+
+    companion object {
+        const val NUMBER_OF_JOKES = 12
     }
 }

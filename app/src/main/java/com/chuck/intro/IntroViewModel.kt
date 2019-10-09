@@ -5,13 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chuck.data.ChuckJokeRepository
 import com.chuck.di.CoroutineContextProvider
-import com.chuck.utils.Constants
 import com.chuck.utils.Constants.Companion.TIMEOUT
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
-import kotlinx.coroutines.withTimeoutOrNull
 import javax.inject.Inject
 
 class IntroViewModel @Inject constructor(
