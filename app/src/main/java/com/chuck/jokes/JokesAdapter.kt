@@ -1,13 +1,11 @@
-package com.chuck.list
+package com.chuck.jokes
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.chuck.R
 import com.chuck.databinding.JokeItemRowBinding
 import com.chuck.model.Joke
-import kotlinx.android.synthetic.main.joke_item_row.view.*
+import kotlinx.android.synthetic.main.joke_item_row.view.joke_text
 
 
 class JokesAdapter() :

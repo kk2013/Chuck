@@ -2,7 +2,7 @@ package com.chuck.di
 
 import androidx.lifecycle.ViewModel
 import com.chuck.jokes.JokesFragment
-import com.chuck.list.JokesViewModel
+import com.chuck.jokes.JokesViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector

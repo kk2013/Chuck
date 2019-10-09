@@ -1,4 +1,4 @@
-package com.chuck.list
+package com.chuck.jokes
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
