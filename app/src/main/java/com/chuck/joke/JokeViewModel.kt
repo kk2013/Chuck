@@ -22,13 +22,13 @@ class JokeViewModel @Inject constructor(private val jokeRepository: ChuckJokeRep
         data class Success(val jokeText: String) : JokeState()
     }
 
-    fun loadJoke() {
+    fun loadJoke(name: String) {
         _state.value = JokeState.Loading
         viewModelScope.launch {
 
             try {
                 val jokeResponse = withContext(contextProvider.IO) {
-                    jokeRepository.getRandomJoke()
+                    jokeRepository.getCustomNameJoke(name)
                 }
                 _state.value = JokeState.Success(jokeResponse.value.joke)
             } catch (ex: Exception) {

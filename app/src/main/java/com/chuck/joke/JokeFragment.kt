@@ -1,16 +1,15 @@
 package com.chuck.joke
 
+import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import com.chuck.R
 import com.chuck.databinding.FragmentJokeBinding
 import com.chuck.di.ChuckViewModelFactory
-import com.chuck.list.JokesViewModel
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -31,19 +30,32 @@ class JokeFragment : DaggerFragment() {
 
         val binding = FragmentJokeBinding.inflate(inflater, container, false)
 
+        binding.doneButton.setOnClickListener {
+            jokeViewModel.loadJoke(binding.nameEditText.text.toString())
+        }
+
         jokeViewModel.state.observe(this, Observer {
             when (it) {
                 is JokeViewModel.JokeState.Loading -> binding.progressBar.visibility = View.VISIBLE
                 is JokeViewModel.JokeState.Loaded -> binding.progressBar.visibility = View.GONE
-//                is JokeViewModel.JokeState.Failed -> showEmptyState()
+                is JokeViewModel.JokeState.Failed -> showDialog(getString(R.string.no_data))
                 is JokeViewModel.JokeState.Success -> {
-                    binding.joke = it.jokeText
-                    Log.i("JOKE", it.jokeText)
+                    showDialog(it.jokeText)
                 }
             }
         })
-        jokeViewModel.loadJoke()
 
         return binding.root
+    }
+
+    private fun showDialog(jokeText: String) {
+        AlertDialog.Builder(activity)
+            .setCancelable(true)
+            .setMessage(jokeText)
+            .setNegativeButton(getString(R.string.done)) { dialog, which ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
     }
 }

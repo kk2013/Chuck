@@ -1,17 +1,16 @@
-package com.chuck.joke
+package com.chuck.intro
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.chuck.TestCoroutineContextProvider
 import com.chuck.TestCoroutineRule
 import com.chuck.data.ChuckJokeRepository
-import com.chuck.joke.JokeViewModel.JokeState.Failed
-import com.chuck.joke.JokeViewModel.JokeState.Loaded
-import com.chuck.joke.JokeViewModel.JokeState.Loading
-import com.chuck.joke.JokeViewModel.JokeState.Success
+import com.chuck.intro.IntroViewModel.IntroState.Failed
+import com.chuck.intro.IntroViewModel.IntroState.Loaded
+import com.chuck.intro.IntroViewModel.IntroState.Loading
+import com.chuck.intro.IntroViewModel.IntroState.Success
 import com.chuck.model.Joke
 import com.chuck.model.JokeResponse
-import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.After
@@ -23,7 +22,7 @@ import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import retrofit2.HttpException
 
-class JokeViewModelTest {
+class IntroViewModelTest {
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -38,11 +37,11 @@ class JokeViewModelTest {
     @Mock
     lateinit var mockHttpException: HttpException
 
-    private lateinit var observer: Observer<JokeViewModel.JokeState>
+    private lateinit var observer: Observer<IntroViewModel.IntroState>
 
-    private val actualValues = mutableListOf<JokeViewModel.JokeState>()
+    private val actualValues = mutableListOf<IntroViewModel.IntroState>()
 
-    private lateinit var jokeViewModel: JokeViewModel
+    private lateinit var introViewModel: IntroViewModel
 
     @Before
     fun setUp() {
@@ -51,7 +50,7 @@ class JokeViewModelTest {
         observer = Observer {
             actualValues.plusAssign(it)
         }
-        jokeViewModel = JokeViewModel(mockJokeRepository, TestCoroutineContextProvider())
+        introViewModel = IntroViewModel(mockJokeRepository, TestCoroutineContextProvider())
     }
 
     @After
@@ -64,12 +63,12 @@ class JokeViewModelTest {
 
         val joke = Joke(1, "Some Chuck joke", emptyList())
 
-        whenever(mockJokeRepository.getCustomNameJoke(any())).thenThrow(mockHttpException)
+        whenever(mockJokeRepository.getRandomJoke()).thenThrow(mockHttpException)
         whenever(mockJokeResponse.value).thenReturn(joke)
 
-        jokeViewModel.state.observeForever(observer)
+        introViewModel.state.observeForever(observer)
 
-        jokeViewModel.loadJoke("")
+        introViewModel.loadJoke()
 
         assertEquals(3, actualValues.size)
         assertEquals(Loading, actualValues[0])
@@ -82,12 +81,12 @@ class JokeViewModelTest {
 
         val joke = Joke(1, "Some Chuck joke", emptyList())
 
-        whenever(mockJokeRepository.getCustomNameJoke(any())).thenReturn(mockJokeResponse)
+        whenever(mockJokeRepository.getRandomJoke()).thenReturn(mockJokeResponse)
         whenever(mockJokeResponse.value).thenReturn(joke)
 
-        jokeViewModel.state.observeForever(observer)
+        introViewModel.state.observeForever(observer)
 
-        jokeViewModel.loadJoke("")
+        introViewModel.loadJoke()
 
         assertEquals(3, actualValues.size)
         assertEquals(Loading, actualValues[0])

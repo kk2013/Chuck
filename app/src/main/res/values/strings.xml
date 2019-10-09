@@ -6,4 +6,8 @@
     <string name="title_text">Chuck Norris Jokes</string>
     <string name="joke_text">Text for the joke screen</string>
     <string name="jokes_text">Will be a list of jokes</string>
+    <string name="done">Done</string>
+    <string name="add_name">John Smith</string>
+    <string name="name_description">Enter a first and last name to be used in the joke</string>
+    <string name="no_data">Unable to retrieve data</string>
 </resources>

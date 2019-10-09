@@ -7,5 +7,7 @@ class ChuckJokeRepository @Inject constructor(private val service: ChuckJokeServ
 
     suspend fun getRandomJoke() = service.getRandomJoke()
 
+    suspend fun getCustomNameJoke(name: String) = service.getCustomNameJoke(name)
+
     suspend fun getJokes(numberOfJokes: Int) = service.getJokes(numberOfJokes)
 }
