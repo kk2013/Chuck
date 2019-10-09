@@ -7,6 +7,7 @@ import com.chuck.data.ChuckJokeRepository
 import com.chuck.di.CoroutineContextProvider
 import com.chuck.utils.Constants
 import com.chuck.utils.Constants.Companion.TIMEOUT
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
@@ -37,6 +38,7 @@ class IntroViewModel @Inject constructor(
                     jokeRepository.getRandomJoke()
                 }
             }
+            delay(3000)
             _state.value =
                 IntroState.Success(jokeResponse.value.joke)
         } catch (ex: Exception) {
