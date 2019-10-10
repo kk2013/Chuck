@@ -9,6 +9,8 @@ buildscript {
         nav_version = '2.1.0'
         retrofitVersion = '2.6.2'
         moshiVersion = '1.8.0'
+        okttpVersionMin21 = '4.2.2'
+        okttpVersionMin16 = '3.12.2'
     }
     repositories {
         google()
