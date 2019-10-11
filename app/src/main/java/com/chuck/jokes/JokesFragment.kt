@@ -39,7 +39,6 @@ class JokesFragment : DaggerFragment() {
         binding.recyclerView.adapter = jokesAdapter
 
         jokesViewModel.getJokes().observe(this, Observer {
-            Log.i("JOKE", "adapter call "+it.size)
             jokesAdapter.submitList(it)
         })
 

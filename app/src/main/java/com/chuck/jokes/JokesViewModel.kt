@@ -20,7 +20,6 @@ class JokesViewModel @Inject constructor(
     val state: MutableLiveData<JokesState>
         get() = _state
 
-
     sealed class JokesState {
         object Loading : JokesState()
         object Loaded : JokesState()
