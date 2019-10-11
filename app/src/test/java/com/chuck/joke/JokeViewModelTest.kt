@@ -13,6 +13,7 @@ import com.chuck.joke.JokeViewModel.JokeState.Success
 import com.chuck.model.Joke
 import com.chuck.model.JokeResponse
 import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.doAnswer
 import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
@@ -85,6 +86,20 @@ class JokeViewModelTest {
     @Test
     fun `test invalid name`() = coroutineTestRule.runBlockingTest {
 
+        jokeViewModel.state.observeForever(observer)
+
+        jokeViewModel.loadJoke("JohnSmith")
+
+        verify(mockJokeRepository, never()).getCustomNameJoke(any(), any())
+        assertEquals(1, actualValues.size)
+        assertEquals(InvalidName, actualValues[0])
+    }
+
+    @Test
+    fun `test timeout`() = coroutineTestRule.runBlockingTest {
+
+//        whenever(mockJokeRepository.getCustomNameJoke(any(), any())).thenReturn(mockJokeResponse)
+        
         jokeViewModel.state.observeForever(observer)
 
         jokeViewModel.loadJoke("JohnSmith")

@@ -79,14 +79,9 @@ dependencies {
     testImplementation('org.mockito:mockito-inline:3.1.0')
     testImplementation('com.nhaarman:mockito-kotlin:1.6.0')
 
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okttpVersionMin21"
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test:rules:1.2.0'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    androidTestImplementation("com.github.tomakehurst:wiremock:2.25.0") {
-        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
-        exclude group: 'asm', module: 'asm'
-        exclude group: 'org.json', module: 'json'
-        exclude group: 'com.google.guava', module: 'guava'
-    }
 }
