@@ -39,6 +39,7 @@ class JokeFragment : DaggerFragment() {
                 is JokeViewModel.JokeState.Loading -> binding.progressBar.visibility = View.VISIBLE
                 is JokeViewModel.JokeState.Loaded -> binding.progressBar.visibility = View.GONE
                 is JokeViewModel.JokeState.Failed -> showDialog(getString(R.string.no_data))
+                is JokeViewModel.JokeState.InvalidName -> showDialog(getString(R.string.invalid_name))
                 is JokeViewModel.JokeState.Success -> {
                     showDialog(it.jokeText)
                 }

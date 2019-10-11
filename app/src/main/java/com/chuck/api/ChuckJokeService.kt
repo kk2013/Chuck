@@ -12,7 +12,7 @@ interface ChuckJokeService {
     suspend fun getRandomJoke(): JokeResponse
 
     @GET("/jokes/random?escape=javascript")
-    suspend fun getCustomNameJoke(@Query("firstName") firstName: String): JokeResponse
+    suspend fun getCustomNameJoke(@Query("firstName") firstName: String, @Query("lastName") lastName: String): JokeResponse
 
     @GET("/jokes/random/{numberOfJokes}?escape=javascript")
     suspend fun getJokes(@Path("numberOfJokes") numberOfJokes: Int,

@@ -6,16 +6,21 @@ import com.chuck.TestCoroutineContextProvider
 import com.chuck.TestCoroutineRule
 import com.chuck.data.ChuckJokeRepository
 import com.chuck.joke.JokeViewModel.JokeState.Failed
+import com.chuck.joke.JokeViewModel.JokeState.InvalidName
 import com.chuck.joke.JokeViewModel.JokeState.Loaded
 import com.chuck.joke.JokeViewModel.JokeState.Loading
 import com.chuck.joke.JokeViewModel.JokeState.Success
 import com.chuck.model.Joke
 import com.chuck.model.JokeResponse
 import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.never
+import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -60,16 +65,16 @@ class JokeViewModelTest {
     }
 
     @Test
-    fun `testFailure`() = coroutineTestRule.runBlockingTest {
+    fun `test failure`() = coroutineTestRule.runBlockingTest {
 
         val joke = Joke(1, "Some Chuck joke", emptyList())
 
-        whenever(mockJokeRepository.getCustomNameJoke(any())).thenThrow(mockHttpException)
+        whenever(mockJokeRepository.getCustomNameJoke(any(), any())).thenThrow(mockHttpException)
         whenever(mockJokeResponse.value).thenReturn(joke)
 
         jokeViewModel.state.observeForever(observer)
 
-        jokeViewModel.loadJoke("")
+        jokeViewModel.loadJoke("John Smith")
 
         assertEquals(3, actualValues.size)
         assertEquals(Loading, actualValues[0])
@@ -78,20 +83,48 @@ class JokeViewModelTest {
     }
 
     @Test
-    fun `testSuccess`() = coroutineTestRule.runBlockingTest {
+    fun `test invalid name`() = coroutineTestRule.runBlockingTest {
+
+        jokeViewModel.state.observeForever(observer)
+
+        jokeViewModel.loadJoke("JohnSmith")
+
+        verify(mockJokeRepository, never()).getCustomNameJoke(any(), any())
+        assertEquals(1, actualValues.size)
+        assertEquals(InvalidName, actualValues[0])
+    }
+
+    @Test
+    fun `test success`() = coroutineTestRule.runBlockingTest {
 
         val joke = Joke(1, "Some Chuck joke", emptyList())
 
-        whenever(mockJokeRepository.getCustomNameJoke(any())).thenReturn(mockJokeResponse)
+        whenever(mockJokeRepository.getCustomNameJoke(any(), any())).thenReturn(mockJokeResponse)
         whenever(mockJokeResponse.value).thenReturn(joke)
 
         jokeViewModel.state.observeForever(observer)
 
-        jokeViewModel.loadJoke("")
+        jokeViewModel.loadJoke("John Smith")
 
         assertEquals(3, actualValues.size)
         assertEquals(Loading, actualValues[0])
         assertEquals(Success(joke.joke), actualValues[1])
         assertEquals(Loaded, actualValues[2])
+    }
+
+    @Test
+    fun `invalid name with only one name`() {
+        val names = jokeViewModel.validName("John")
+
+        assertTrue(names.isEmpty())
+    }
+
+    @Test
+    fun `valid name`() {
+        val names = jokeViewModel.validName("John Smith")
+
+        assertFalse(names.isEmpty())
+        assertEquals("John", names[1])
+        assertEquals("Smith", names[2])
     }
 }

@@ -1,12 +1,10 @@
 package com.chuck.data
 
 import androidx.lifecycle.LiveData
-import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.chuck.api.ChuckJokeService
 import com.chuck.model.Joke
-import kotlinx.coroutines.CoroutineScope
 import java.util.concurrent.Executors
 import javax.inject.Inject
 
@@ -15,7 +13,8 @@ class ChuckJokeRepository @Inject constructor(
 ) {
     suspend fun getRandomJoke() = service.getRandomJoke()
 
-    suspend fun getCustomNameJoke(name: String) = service.getCustomNameJoke(name)
+    suspend fun getCustomNameJoke(firstName: String, lastName: String) =
+        service.getCustomNameJoke(firstName, lastName)
 
     fun getJokes(): LiveData<PagedList<Joke>> {
         val pagedListConfig = PagedList.Config.Builder()
@@ -26,7 +25,7 @@ class ChuckJokeRepository @Inject constructor(
             .build()
 
         val jokesDataSourceFactory = JokesDataSourceFactory(service)
-        return  LivePagedListBuilder(jokesDataSourceFactory, pagedListConfig)
+        return LivePagedListBuilder(jokesDataSourceFactory, pagedListConfig)
             .setInitialLoadKey(1)
             .setFetchExecutor(Executors.newFixedThreadPool(3))
             .build()

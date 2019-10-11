@@ -3,7 +3,6 @@ package com.chuck.data
 import androidx.paging.PageKeyedDataSource
 import com.chuck.api.ChuckJokeService
 import com.chuck.model.Joke
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking
 
 class JokeDataSource(
@@ -16,7 +15,7 @@ class JokeDataSource(
     ) {
         runBlocking {
             try {
-                val jokes = service.getJokes(12, 1, params.requestedLoadSize)
+                val jokes = service.getJokes(NUMBER_OF_JOKES, 1, params.requestedLoadSize)
                 callback.onResult(jokes.value, null, 2)
             } catch (ex: Exception) {
 
@@ -28,7 +27,7 @@ class JokeDataSource(
         runBlocking {
             try {
                 val page = params.key
-                val jokes = service.getJokes(12, page, params.requestedLoadSize)
+                val jokes = service.getJokes(NUMBER_OF_JOKES, page, params.requestedLoadSize)
                 callback.onResult(jokes.value, page - 1)
             } catch (ex: Exception) {
 
@@ -40,11 +39,15 @@ class JokeDataSource(
         runBlocking {
             try {
                 val page = params.key
-                val jokes = service.getJokes(12, page, params.requestedLoadSize)
+                val jokes = service.getJokes(NUMBER_OF_JOKES, page, params.requestedLoadSize)
                 callback.onResult(jokes.value, page + 1)
             } catch (ex: Exception) {
 
             }
         }
+    }
+
+    companion object {
+        private const val NUMBER_OF_JOKES = 12
     }
 }
