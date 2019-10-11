@@ -5,7 +5,6 @@ import androidx.lifecycle.Observer
 import com.chuck.TestCoroutineContextProvider
 import com.chuck.TestCoroutineRule
 import com.chuck.data.ChuckJokeRepository
-import com.chuck.jokes.JokesViewModel
 import com.chuck.jokes.JokesViewModel.JokesState.Failed
 import com.chuck.jokes.JokesViewModel.JokesState.Loaded
 import com.chuck.jokes.JokesViewModel.JokesState.Loading
@@ -52,7 +51,7 @@ class JokesViewModelTest {
         observer = Observer {
             actualValues.plusAssign(it)
         }
-        jokesViewModel = JokesViewModel(mockJokeRepository, TestCoroutineContextProvider())
+        jokesViewModel = JokesViewModel(mockJokeRepository)
     }
 
     @After

@@ -1,6 +1,7 @@
 package com.chuck.jokes
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +24,7 @@ class JokesFragment : DaggerFragment() {
     }
 
     private lateinit var layoutManager: RecyclerView.LayoutManager
-    private lateinit var jokesAdapter: JokesAdapter
+    private val jokesAdapter: JokesAdapter = JokesAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,22 +36,12 @@ class JokesFragment : DaggerFragment() {
 
         layoutManager = LinearLayoutManager(activity)
         binding.recyclerView.layoutManager = layoutManager
-        jokesAdapter = JokesAdapter()
         binding.recyclerView.adapter = jokesAdapter
 
-        jokesViewModel.state.observe(this, Observer {
-            when (it) {
-                is JokesViewModel.JokesState.Loading -> binding.progressBar.visibility =
-                    View.VISIBLE
-                is JokesViewModel.JokesState.Loaded -> binding.progressBar.visibility = View.GONE
-//                is JokesViewModel.JokesState.Failed ->
-                is JokesViewModel.JokesState.Success -> {
-                    jokesAdapter.loadJokes(it.jokes)
-                    jokesAdapter.notifyDataSetChanged()
-                }
-            }
+        jokesViewModel.getJokes().observe(this, Observer {
+            Log.i("JOKE", "adapter call "+it.size)
+            jokesAdapter.submitList(it)
         })
-        jokesViewModel.loadJokes()
 
         return binding.root
     }

@@ -3,6 +3,7 @@
     <dimen name="xlarge_padding">128dp</dimen>
     <dimen name="large_padding">64dp</dimen>
     <dimen name="small_padding">8dp</dimen>
+    <dimen name="medium_padding">16dp</dimen>
     <dimen name="button_height">72dp</dimen>
     <dimen name="edit_text_height">72dp</dimen>
 </resources>
