@@ -11,4 +11,5 @@
     <string name="name_description">Enter a first and last name to be used in the joke</string>
     <string name="no_data">Unable to retrieve data</string>
     <string name="invalid_name">Please check that you have entered a first and last name</string>
+    <string name="loading">Loading</string>
 </resources>

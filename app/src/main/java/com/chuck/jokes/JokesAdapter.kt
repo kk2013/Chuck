@@ -1,59 +1,99 @@
 package com.chuck.jokes
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.chuck.databinding.JokeItemRowBinding
+import com.chuck.R
+import com.chuck.data.NetworkState
+import com.chuck.data.NetworkState.Companion.LOADED
 import com.chuck.model.Joke
-import kotlinx.android.synthetic.main.joke_item_row.view.joke_text
-
 
 class JokesAdapter :
-    PagedListAdapter<Joke, JokesAdapter.JokeViewHolder>(DIFF_CALLBACK) {
-/*
-    var jokes: List<Joke> = emptyList()
+    PagedListAdapter<Joke, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
-    fun loadJokes(jokes: PagedList<Joke>) {
-        this.jokes = jokes
-        notifyDataSetChanged()
-    }*/
+    private var networkState: NetworkState? = null
 
-    override fun onBindViewHolder(holder: JokeViewHolder, position: Int) {
-        val joke: Joke? = getItem(position)
-        holder.bind(joke)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (getItemViewType(position)) {
+            R.layout.joke_item_row -> (holder as JokeViewHolder).bind(getItem(position))
+            R.layout.progress_item_row -> (holder as ProgressViewHolder)//.bind(networkState)
+        }
     }
 
-//    override fun getItemCount(): Int = jokes.size
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JokeViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val binding = JokeItemRowBinding.inflate(inflater)
-        return JokeViewHolder(binding)
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+        jokes: MutableList<Any>
+    ) {
+        if (jokes.isNotEmpty()) {
+            val joke = getItem(position)
+            (holder as JokeViewHolder).bind(joke)
+        } else {
+            onBindViewHolder(holder, position)
+        }
     }
 
-    inner class JokeViewHolder(binding: JokeItemRowBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            R.layout.joke_item_row -> JokeViewHolder.create(parent)
+            R.layout.progress_item_row -> ProgressViewHolder.create(parent)
+            else -> throw IllegalArgumentException("Unknown view type: $viewType")
+        }
+    }
 
-        fun bind(joke: Joke?) {
-            with(itemView) {
-                joke_text.text = joke?.joke
+    override fun getItemViewType(position: Int): Int {
+        return if (hasExtraRow() && position == itemCount - 1) {
+            R.layout.progress_item_row
+        } else {
+            R.layout.joke_item_row
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return super.getItemCount() + if (hasExtraRow()) 1 else 0
+    }
+
+    private fun hasExtraRow() = networkState != null && networkState != LOADED
+
+    fun setNetworkState(newNetworkState: NetworkState?) {
+        val previousState = this.networkState
+        val hadExtraRow = hasExtraRow()
+        this.networkState = newNetworkState
+        val hasExtraRow = hasExtraRow()
+        if (hadExtraRow != hasExtraRow) {
+            if (hadExtraRow) {
+                notifyItemRemoved(super.getItemCount())
+            } else {
+                notifyItemInserted(super.getItemCount())
             }
+        } else if (hasExtraRow && previousState != newNetworkState) {
+            notifyItemChanged(itemCount - 1)
         }
     }
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Joke>() {
-            // The ID property identifies when items are the same.
             override fun areItemsTheSame(oldItem: Joke, newItem: Joke) =
                 oldItem.id == newItem.id
 
-            // If you use the "==" operator, make sure that the object implements
-            // .equals(). Alternatively, write custom data comparison logic here.
             override fun areContentsTheSame(
                 oldItem: Joke, newItem: Joke
             ) = oldItem == newItem
+        }
+    }
+
+    class ProgressViewHolder(view: View) :
+        RecyclerView.ViewHolder(view) {
+
+        companion object {
+            fun create(parent: ViewGroup): ProgressViewHolder {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.progress_item_row, parent, false)
+                return ProgressViewHolder(view)
+            }
         }
     }
 }

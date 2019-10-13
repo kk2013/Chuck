@@ -1,5 +1,6 @@
 package com.chuck.joke
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -43,6 +44,7 @@ class JokeViewModel @Inject constructor(
                 }
                 _state.value = JokeState.Success(jokeResponse.value.joke)
             } catch (ex: Exception) {
+                ex.printStackTrace()
                 _state.value = JokeState.Failed
             }
             _state.value = JokeState.Loaded

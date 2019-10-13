@@ -51,7 +51,7 @@ class CustomNameJokeTest {
     }
 
     @Test
-    fun enterInputErrorDisplayed() {
+    fun gerCustomJoke() {
 
         val response: String =
             InstrumentationRegistry.getInstrumentation().context.assets.open("joke.json")

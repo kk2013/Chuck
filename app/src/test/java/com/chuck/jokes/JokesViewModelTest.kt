@@ -26,6 +26,6 @@ class JokesViewModelTest {
 
         jokesViewModel.getJokes()
 
-        verify(mockJokeRepository).getJokes()
+        verify(mockJokeRepository).getJokes(dataSource)
     }
 }

@@ -97,9 +97,9 @@ class JokeViewModelTest {
 
     @Test
     fun `test timeout`() = coroutineTestRule.runBlockingTest {
+        //TODO Advance time to trigger timeout
+        whenever(mockJokeRepository.getCustomNameJoke(any(), any())).thenReturn(mockJokeResponse)
 
-//        whenever(mockJokeRepository.getCustomNameJoke(any(), any())).thenReturn(mockJokeResponse)
-        
         jokeViewModel.state.observeForever(observer)
 
         jokeViewModel.loadJoke("JohnSmith")

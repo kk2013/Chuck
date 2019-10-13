@@ -6,10 +6,10 @@ import com.chuck.api.ChuckJokeService
 import com.chuck.model.Joke
 
 class JokesDataSourceFactory(private val service: ChuckJokeService) : DataSource.Factory<Int, Joke>() {
-    private val sourceLiveData = MutableLiveData<JokeDataSource>()
+    val jokesLiveData = MutableLiveData<JokesDataSource>()
     override fun create(): DataSource<Int, Joke> {
-        val source = JokeDataSource(service)
-        sourceLiveData.postValue(source)
+        val source = JokesDataSource(service)
+        jokesLiveData.postValue(source)
         return source
     }
 }

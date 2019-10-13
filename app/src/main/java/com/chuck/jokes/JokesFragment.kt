@@ -38,10 +38,22 @@ class JokesFragment : DaggerFragment() {
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = jokesAdapter
 
-        jokesViewModel.getJokes().observe(this, Observer {
+        jokesViewModel.jokesList.observe(this, Observer {
+            Log.i("JOKES", "" + it.size)
             jokesAdapter.submitList(it)
         })
+        jokesViewModel.networkState?.observe(this, Observer {
+            Log.i("JOKES", "" + it.status.name)
+            jokesAdapter.setNetworkState(it)
+        })
+
+//        jokesViewModel.refreshJokes()
 
         return binding.root
     }
+
+    /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        jokesViewModel.refreshJokes()
+    }*/
 }

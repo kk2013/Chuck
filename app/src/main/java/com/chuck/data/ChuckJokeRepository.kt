@@ -16,7 +16,7 @@ class ChuckJokeRepository @Inject constructor(
     suspend fun getCustomNameJoke(firstName: String, lastName: String) =
         service.getCustomNameJoke(firstName, lastName)
 
-    fun getJokes(): LiveData<PagedList<Joke>> {
+    fun getJokes(dataSourceFactory: JokesDataSourceFactory): LiveData<PagedList<Joke>> {
         val pagedListConfig = PagedList.Config.Builder()
             .setEnablePlaceholders(true)
             .setPrefetchDistance(5)
@@ -24,10 +24,13 @@ class ChuckJokeRepository @Inject constructor(
             .setPageSize(12)
             .build()
 
-        val jokesDataSourceFactory = JokesDataSourceFactory(service)
-        return LivePagedListBuilder(jokesDataSourceFactory, pagedListConfig)
+        return LivePagedListBuilder(dataSourceFactory, pagedListConfig)
             .setInitialLoadKey(1)
             .setFetchExecutor(Executors.newFixedThreadPool(3))
             .build()
+    }
+
+    fun createDataSourceFactory(): JokesDataSourceFactory {
+        return JokesDataSourceFactory(service)
     }
 }
