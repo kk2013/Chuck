@@ -1,5 +1,6 @@
 package com.chuck.jokes
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,27 +9,26 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.chuck.R
 import com.chuck.data.NetworkState
-import com.chuck.data.NetworkState.Companion.LOADED
 import com.chuck.model.Joke
 
-class JokesAdapter :
-    PagedListAdapter<Joke, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
+class JokesAdapter
+    : PagedListAdapter<Joke, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
-    private var networkState: NetworkState? = null
+    private var networkState: NetworkState? = NetworkState.LOADING
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
             R.layout.joke_item_row -> (holder as JokeViewHolder).bind(getItem(position))
-            R.layout.progress_item_row -> (holder as ProgressViewHolder)//.bind(networkState)
+            R.layout.progress_item_row -> (holder as ProgressViewHolder)
         }
     }
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
         position: Int,
-        jokes: MutableList<Any>
+        payloads: MutableList<Any>
     ) {
-        if (jokes.isNotEmpty()) {
+        if (payloads.isNotEmpty()) {
             val joke = getItem(position)
             (holder as JokeViewHolder).bind(joke)
         } else {
@@ -52,11 +52,9 @@ class JokesAdapter :
         }
     }
 
-    override fun getItemCount(): Int {
-        return super.getItemCount() + if (hasExtraRow()) 1 else 0
-    }
+    override fun getItemCount(): Int = super.getItemCount() + if (hasExtraRow()) 1 else 0
 
-    private fun hasExtraRow() = networkState != null && networkState != LOADED
+    private fun hasExtraRow(): Boolean = networkState != null && networkState != NetworkState.LOADED
 
     fun setNetworkState(newNetworkState: NetworkState?) {
         val previousState = this.networkState
@@ -75,13 +73,12 @@ class JokesAdapter :
     }
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Joke>() {
-            override fun areItemsTheSame(oldItem: Joke, newItem: Joke) =
-                oldItem.id == newItem.id
+        private const val LOG_TAG = "Adapter"
 
-            override fun areContentsTheSame(
-                oldItem: Joke, newItem: Joke
-            ) = oldItem == newItem
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Joke>() {
+            override fun areItemsTheSame(oldItem: Joke, newItem: Joke) = oldItem.id == newItem.id
+
+            override fun areContentsTheSame(oldItem: Joke, newItem: Joke) = oldItem == newItem
         }
     }
 

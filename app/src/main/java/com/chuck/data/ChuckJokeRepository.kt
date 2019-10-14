@@ -19,9 +19,9 @@ class ChuckJokeRepository @Inject constructor(
     fun getJokes(dataSourceFactory: JokesDataSourceFactory): LiveData<PagedList<Joke>> {
         val pagedListConfig = PagedList.Config.Builder()
             .setEnablePlaceholders(true)
-            .setPrefetchDistance(5)
-            .setInitialLoadSizeHint(20)
-            .setPageSize(12)
+            .setPrefetchDistance(PREFETCH_SIZE)
+            .setInitialLoadSizeHint(INITIAL_LOAD_SIZE)
+            .setPageSize(PAGE_SIZE)
             .build()
 
         return LivePagedListBuilder(dataSourceFactory, pagedListConfig)
@@ -32,5 +32,11 @@ class ChuckJokeRepository @Inject constructor(
 
     fun createDataSourceFactory(): JokesDataSourceFactory {
         return JokesDataSourceFactory(service)
+    }
+
+    companion object {
+        const val PAGE_SIZE = 12
+        const val PREFETCH_SIZE = 5
+        const val INITIAL_LOAD_SIZE = 20
     }
 }

@@ -1,5 +1,6 @@
 package com.chuck.data
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.chuck.api.ChuckJokeService
@@ -11,7 +12,6 @@ class JokesDataSource(
 ) : PageKeyedDataSource<Int, Joke>() {
 
     val networkState = MutableLiveData<NetworkState>()
-
     val initialLoad = MutableLiveData<NetworkState>()
 
     override fun loadInitial(
@@ -23,6 +23,7 @@ class JokesDataSource(
                 networkState.postValue(NetworkState.LOADING)
                 initialLoad.postValue(NetworkState.LOADING)
                 val jokes = service.getJokes(NUMBER_OF_JOKES, 1, params.requestedLoadSize)
+                Log.i(LOG_TAG, "Initial load: ${jokes.value.size} jokes")
                 callback.onResult(jokes.value, null, 2)
                 networkState.postValue(NetworkState.LOADED)
                 initialLoad.postValue(NetworkState.LOADED)
@@ -43,6 +44,7 @@ class JokesDataSource(
                 networkState.postValue(NetworkState.LOADING)
                 val page = params.key
                 val jokes = service.getJokes(NUMBER_OF_JOKES, page, params.requestedLoadSize)
+                Log.i(LOG_TAG, "Loaded: ${jokes.value.size} jokes")
                 callback.onResult(jokes.value, page + 1)
                 networkState.postValue(NetworkState.LOADED)
             } catch (ex: Exception) {
@@ -53,5 +55,6 @@ class JokesDataSource(
 
     companion object {
         private const val NUMBER_OF_JOKES = 12
+        private const val LOG_TAG = "Data source"
     }
 }

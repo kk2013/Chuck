@@ -10,16 +10,15 @@ import com.chuck.data.NetworkState
 import com.chuck.model.Joke
 import javax.inject.Inject
 
-
 class JokesViewModel @Inject constructor(jokeRepository: ChuckJokeRepository
 ) : ViewModel() {
 
     private val dataSourceFactory: JokesDataSourceFactory = jokeRepository.createDataSourceFactory()
-    var jokesList: LiveData<PagedList<Joke>>
+    var jokesRepo: LiveData<PagedList<Joke>>
     var networkState: LiveData<NetworkState>?
 
     init {
-        jokesList = jokeRepository.getJokes(dataSourceFactory)
+        jokesRepo = jokeRepository.getJokes(dataSourceFactory)
         networkState = switchMap(dataSourceFactory.jokesLiveData, { it.networkState })
     }
 }

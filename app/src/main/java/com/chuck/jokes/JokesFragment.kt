@@ -38,22 +38,19 @@ class JokesFragment : DaggerFragment() {
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = jokesAdapter
 
-        jokesViewModel.jokesList.observe(this, Observer {
-            Log.i("JOKES", "" + it.size)
+        jokesViewModel.jokesRepo.observe(this, Observer {
+            Log.i(LOG_TAG, "${it.size} jokes")
             jokesAdapter.submitList(it)
         })
         jokesViewModel.networkState?.observe(this, Observer {
-            Log.i("JOKES", "" + it.status.name)
+            Log.i(LOG_TAG, it.status.name)
             jokesAdapter.setNetworkState(it)
         })
-
-//        jokesViewModel.refreshJokes()
 
         return binding.root
     }
 
-    /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        jokesViewModel.refreshJokes()
-    }*/
+    companion object {
+        private const val LOG_TAG = "Jokes Fragment"
+    }
 }
