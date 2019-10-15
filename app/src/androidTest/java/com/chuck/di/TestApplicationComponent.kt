@@ -16,13 +16,7 @@ interface TestApplicationComponent : ApplicationComponent {
     fun getMockWebServer(): MockWebServer
 
     override fun inject(app: ChuckApplication)
-    /*    @Component.Builder
-        interface Builder {
-            @BindsInstance
-            fun create(app: Application):Builder
 
-            fun build(): TestApplicationComponent
-        }*/
     @Component.Factory
     interface Factory {
         fun create(@BindsInstance applicationContext: Context): TestApplicationComponent

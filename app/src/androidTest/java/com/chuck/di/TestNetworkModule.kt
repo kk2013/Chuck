@@ -3,6 +3,7 @@ package com.chuck.di
 import com.chuck.BuildConfig
 import com.chuck.api.ChuckJokeService
 import com.chuck.utils.LiveDataCallAdapterFactory
+import com.jakewharton.espresso.OkHttp3IdlingResource
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -17,7 +18,8 @@ import javax.inject.Singleton
 @Module
 class TestNetworkModule {
 
-    private val BASE_URL = "http://api.icndb.com"
+    private val PORT = 8080
+    private val BASE_URL = "http://127.0.0.1:$PORT/"
 
     @Provides
     @Singleton
@@ -25,7 +27,7 @@ class TestNetworkModule {
         var mockWebServer: MockWebServer? = null
         val thread = Thread(Runnable {
             mockWebServer = MockWebServer()
-            mockWebServer?.start()
+            mockWebServer?.start(PORT)
         })
         thread.start()
         thread.join()
@@ -38,7 +40,7 @@ class TestNetworkModule {
     fun provideBaseUrl(mockWebServer: MockWebServer): String {
         var url = ""
         val t = Thread(Runnable {
-            url = mockWebServer.url("/").toString()
+            url = mockWebServer.url(BASE_URL).toString()
         })
         t.start()
         t.join()
@@ -47,7 +49,6 @@ class TestNetworkModule {
 
     private val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
         this.level = if(BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.BASIC
-
     }
 
     @Provides
@@ -60,10 +61,14 @@ class TestNetworkModule {
 
     @Provides
     @Singleton
+    fun providesIdlingResource(okHttpClient: OkHttpClient) = OkHttp3IdlingResource.create("okhttp", okHttpClient)
+
+    @Provides
+    @Singleton
     fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .client(okHttpClient)
             .baseUrl(BASE_URL)
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(LiveDataCallAdapterFactory())
             .build()

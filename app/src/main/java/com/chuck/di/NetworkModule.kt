@@ -21,7 +21,6 @@ class NetworkModule {
 
     private val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
         this.level = if(BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.BASIC
-
     }
 
     @Provides
@@ -36,8 +35,8 @@ class NetworkModule {
     @Singleton
     fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .client(okHttpClient)
             .baseUrl(BASE_URL)
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(LiveDataCallAdapterFactory())
             .build()
