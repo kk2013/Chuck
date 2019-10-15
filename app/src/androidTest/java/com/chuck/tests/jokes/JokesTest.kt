@@ -65,7 +65,7 @@ class JokesTest {
 
         onView(withId(R.id.recycler_view)).check(matches(isDisplayed()))
         onView(withId(R.id.recycler_view)).check(matches(hasChildCount(1)))
-//        Thread.sleep(5000)
-//        onView(withId(R.id.recycler_view)).check(matches(hasChildCount(15)))
+        Thread.sleep(5000)
+        onView(withId(R.id.recycler_view)).check(matches(hasChildCount(20)))
     }
 }
