@@ -31,8 +31,6 @@ class CustomNameJokeTest {
 
     @get:Rule
     var activityRule: ActivityTestRule<IntroActivity> = ActivityTestRule(IntroActivity::class.java)
-//    @get: Rule
-//    var idlingResourceRule: IdlingResourceRule = IdlingResourceRule()
 
     private lateinit var mockWebServer: MockWebServer
     private lateinit var app: ChuckApplication
@@ -49,6 +47,11 @@ class CustomNameJokeTest {
         )
 
         activityRule.launchActivity(intent)
+    }
+
+    @After
+    fun teadDown() {
+        mockWebServer.shutdown()
     }
 
     @Test

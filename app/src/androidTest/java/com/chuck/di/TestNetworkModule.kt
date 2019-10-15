@@ -61,10 +61,6 @@ class TestNetworkModule {
 
     @Provides
     @Singleton
-    fun providesIdlingResource(okHttpClient: OkHttpClient) = OkHttp3IdlingResource.create("okhttp", okHttpClient)
-
-    @Provides
-    @Singleton
     fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)

@@ -16,6 +16,7 @@ import com.chuck.di.DaggerTestApplicationComponent
 import com.chuck.intro.IntroActivity
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -42,6 +43,11 @@ class RandomJokeTest {
         )
 
         activityRule.launchActivity(intent)
+    }
+
+    @After
+    fun teadDown() {
+        mockWebServer.shutdown()
     }
 
     @Test
