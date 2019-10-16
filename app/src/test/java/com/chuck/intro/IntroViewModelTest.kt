@@ -88,6 +88,8 @@ class IntroViewModelTest {
 
         introViewModel.loadJoke()
 
+        coroutineTestRule.advanceTime(3000)
+
         assertEquals(3, actualValues.size)
         assertEquals(Loading, actualValues[0])
         assertEquals(Success(joke.joke), actualValues[1])
