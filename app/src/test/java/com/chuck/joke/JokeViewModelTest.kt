@@ -13,7 +13,6 @@ import com.chuck.joke.JokeViewModel.JokeState.Success
 import com.chuck.model.Joke
 import com.chuck.model.JokeResponse
 import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.doAnswer
 import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
