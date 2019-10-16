@@ -1,10 +1,15 @@
 <resources>
 
-    <style name="AppTheme" parent="Base.AppTheme" />
+    <style name="AppTheme" parent="AppTheme.NoActionBar" />
 
     <style name="AppTheme.NoActionBar" parent="Base.AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.Launcher">
+        <item name="windowActionBar">false</item>
+        <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
 
     <style name="Base.AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
