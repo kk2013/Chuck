@@ -13,6 +13,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/large_padding"
             android:text="@string/title_text"
+            android:textAppearance="@style/HeaderText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

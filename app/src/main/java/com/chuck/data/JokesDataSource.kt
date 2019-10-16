@@ -12,7 +12,6 @@ class JokesDataSource(
 ) : PageKeyedDataSource<Int, Joke>() {
 
     val networkState = MutableLiveData<NetworkState>()
-    val initialLoad = MutableLiveData<NetworkState>()
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
@@ -21,14 +20,11 @@ class JokesDataSource(
         runBlocking {
             try {
                 networkState.postValue(NetworkState.LOADING)
-                initialLoad.postValue(NetworkState.LOADING)
                 val jokes = service.getJokes(NUMBER_OF_JOKES, 1, params.requestedLoadSize)
                 Log.i(LOG_TAG, "Initial load: ${jokes.value.size} jokes")
                 callback.onResult(jokes.value, null, 2)
                 networkState.postValue(NetworkState.LOADED)
-                initialLoad.postValue(NetworkState.LOADED)
             } catch (ex: Exception) {
-                initialLoad.postValue(NetworkState.FAILED)
                 networkState.postValue(NetworkState.FAILED)
             }
         }
