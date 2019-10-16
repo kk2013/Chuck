@@ -12,4 +12,7 @@
     <string name="no_data">Unable to retrieve data</string>
     <string name="invalid_name">Please check that you have entered a first and last name</string>
     <string name="loading">Loading</string>
+    <string name="nav_view_header_title">Chuckie</string>
+    <string name="joke_fragment_menu_title">Custom name joke</string>
+    <string name="jokes_fragment_menu_title">Jokes</string>
 </resources>
