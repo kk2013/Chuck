@@ -67,10 +67,11 @@ class RandomJokeTest {
         onView(withId(R.id.random_joke_button)).perform(click())
         Thread.sleep(8000)
         onView(withId(android.R.id.message)).check(matches(withText(JOKE_TEST)))
-        onView(withText("DONE")).perform(click())
+        onView(withText(DONE)).perform(click())
     }
 
     companion object {
         const val JOKE_TEST = "Chuck Norris joke text"
+        const val DONE = "Done"
     }
 }

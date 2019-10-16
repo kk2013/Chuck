@@ -22,7 +22,7 @@ android {
     productFlavors {
         minApi16 {
             dimension "api"
-            minSdkVersion 15
+            minSdkVersion 16
             versionCode android.defaultConfig.versionCode
         }
         minApi21 {

@@ -82,7 +82,7 @@ class CustomNameJokeTest {
                 isDisplayed()
             )
         )
-        onView(withText("DONE")).perform(click())
+        onView(withText(DONE)).perform(click())
 
         onView(withId(R.id.name_edit_text)).perform(clearText(), typeText("John Smith"))
         closeSoftKeyboard()
@@ -90,10 +90,11 @@ class CustomNameJokeTest {
 
         Thread.sleep(5000)
         onView(withId(android.R.id.message)).check(matches(withText(JOKE_TEST)))
-        onView(withText("DONE")).perform(click())
+        onView(withText(DONE)).perform(click())
     }
 
     companion object {
         const val JOKE_TEST = "Chuck Norris joke text"
+        const val DONE = "Done"
     }
 }

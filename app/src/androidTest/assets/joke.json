@@ -1,1 +1,8 @@
-{ "type": "success", "value": { "id": 295, "joke": "Chuck Norris joke text", "categories": [] } }
+{
+  "type": "success",
+  "value": {
+    "id": 295,
+    "joke": "Chuck Norris joke text",
+    "categories": []
+  }
+}
