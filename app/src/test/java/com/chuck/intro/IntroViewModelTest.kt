@@ -59,7 +59,7 @@ class IntroViewModelTest {
     }
 
     @Test
-    fun `testFailure`() = coroutineTestRule.runBlockingTest {
+    fun `the correct states are set when an exception is thrown by the joke repo`() = coroutineTestRule.runBlockingTest {
 
         val joke = Joke(1, "Some Chuck joke", emptyList())
 
@@ -77,7 +77,7 @@ class IntroViewModelTest {
     }
 
     @Test
-    fun `testSuccess`() = coroutineTestRule.runBlockingTest {
+    fun `the correct states are set when a success response is returned by the joke repo`() = coroutineTestRule.runBlockingTest {
 
         val joke = Joke(1, "Some Chuck joke", emptyList())
 

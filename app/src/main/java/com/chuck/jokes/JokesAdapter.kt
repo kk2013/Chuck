@@ -1,6 +1,5 @@
 package com.chuck.jokes
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,7 +53,7 @@ class JokesAdapter
 
     override fun getItemCount(): Int = super.getItemCount() + if (hasExtraRow()) 1 else 0
 
-    private fun hasExtraRow(): Boolean = networkState != null && networkState != NetworkState.LOADED
+    private fun hasExtraRow(): Boolean = networkState != null && networkState != NetworkState.SUCCESS
 
     fun setNetworkState(newNetworkState: NetworkState?) {
         val previousState = this.networkState

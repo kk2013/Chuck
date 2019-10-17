@@ -1,6 +1,5 @@
 package com.chuck.joke
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -32,7 +31,7 @@ class JokeViewModel @Inject constructor(
 
     fun loadJoke(name: String) = viewModelScope.launch {
         val names = validName(name)
-        if(names.isEmpty()) {
+        if (names.isEmpty()) {
             _state.value = JokeState.InvalidName
         } else {
             _state.value = JokeState.Loading
