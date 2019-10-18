@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chuck.data.ChuckJokeRepository
 import com.chuck.di.CoroutineContextProvider
+import com.chuck.util.wrapEspressoIdlingResource
 import com.chuck.utils.Constants.Companion.TIMEOUT
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -35,18 +36,20 @@ class JokeViewModel @Inject constructor(
             _state.value = JokeState.InvalidName
         } else {
             _state.value = JokeState.Loading
-            try {
-                val jokeResponse = withTimeout(TIMEOUT) {
-                    withContext(contextProvider.IO) {
-                        jokeRepository.getCustomNameJoke(names[1], names[2])
+            wrapEspressoIdlingResource {
+                try {
+                    val jokeResponse = withTimeout(TIMEOUT) {
+                        withContext(contextProvider.IO) {
+                            jokeRepository.getCustomNameJoke(names[1], names[2])
+                        }
                     }
+                    _state.value = JokeState.Success(jokeResponse.value.joke)
+                } catch (ex: Exception) {
+                    ex.printStackTrace()
+                    _state.value = JokeState.Failed
                 }
-                _state.value = JokeState.Success(jokeResponse.value.joke)
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-                _state.value = JokeState.Failed
+                _state.value = JokeState.Loaded
             }
-            _state.value = JokeState.Loaded
         }
     }
 

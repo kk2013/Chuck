@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.chuck.api.ChuckJokeService
 import com.chuck.model.Joke
+import com.chuck.util.wrapEspressoIdlingResource
 import kotlinx.coroutines.runBlocking
 
 class JokesDataSource(
@@ -16,14 +17,16 @@ class JokesDataSource(
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, Joke>
     ) {
-        runBlocking {
-            try {
-                networkState.postValue(NetworkState.LOADING)
-                val jokes = service.getJokes(NUMBER_OF_JOKES, 1, params.requestedLoadSize)
-                callback.onResult(jokes.value, null, 2)
-                networkState.postValue(NetworkState.SUCCESS)
-            } catch (ex: Exception) {
-                networkState.postValue(NetworkState.FAILED)
+        wrapEspressoIdlingResource {
+            runBlocking {
+                try {
+                    networkState.postValue(NetworkState.LOADING)
+                    val jokes = service.getJokes(NUMBER_OF_JOKES, 1, params.requestedLoadSize)
+                    callback.onResult(jokes.value, null, 2)
+                    networkState.postValue(NetworkState.SUCCESS)
+                } catch (ex: Exception) {
+                    networkState.postValue(NetworkState.FAILED)
+                }
             }
         }
     }
@@ -33,15 +36,17 @@ class JokesDataSource(
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Joke>) {
-        runBlocking {
-            try {
-                networkState.postValue(NetworkState.LOADING)
-                val page = params.key
-                val jokes = service.getJokes(NUMBER_OF_JOKES, page, params.requestedLoadSize)
-                callback.onResult(jokes.value, page + 1)
-                networkState.postValue(NetworkState.SUCCESS)
-            } catch (ex: Exception) {
-                networkState.postValue(NetworkState.FAILED)
+        wrapEspressoIdlingResource {
+            runBlocking {
+                try {
+                    networkState.postValue(NetworkState.LOADING)
+                    val page = params.key
+                    val jokes = service.getJokes(NUMBER_OF_JOKES, page, params.requestedLoadSize)
+                    callback.onResult(jokes.value, page + 1)
+                    networkState.postValue(NetworkState.SUCCESS)
+                } catch (ex: Exception) {
+                    networkState.postValue(NetworkState.FAILED)
+                }
             }
         }
     }

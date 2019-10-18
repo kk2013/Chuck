@@ -1,9 +1,9 @@
 package com.chuck.di
 
+import androidx.test.espresso.IdlingRegistry
 import com.chuck.BuildConfig
 import com.chuck.api.ChuckJokeService
 import com.chuck.utils.LiveDataCallAdapterFactory
-import com.jakewharton.espresso.OkHttp3IdlingResource
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -48,7 +48,8 @@ class TestNetworkModule {
     }
 
     private val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
-        this.level = if(BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.BASIC
+        this.level =
+            if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.BASIC
     }
 
     @Provides

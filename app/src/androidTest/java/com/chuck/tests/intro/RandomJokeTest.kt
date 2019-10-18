@@ -2,6 +2,7 @@ package com.chuck.tests.intro
 
 import android.content.Intent
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -14,6 +15,7 @@ import com.chuck.ChuckApplication
 import com.chuck.R
 import com.chuck.di.DaggerTestApplicationComponent
 import com.chuck.intro.IntroActivity
+import com.chuck.util.EspressoIdlingResource
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
@@ -36,6 +38,7 @@ class RandomJokeTest {
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         app = instrumentation.targetContext.applicationContext as ChuckApplication
         mockWebServer = DaggerTestApplicationComponent.factory().create(app).getMockWebServer()
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.countingIdlingResource)
 
         val intent = Intent(
             InstrumentationRegistry.getInstrumentation()
@@ -48,6 +51,7 @@ class RandomJokeTest {
     @After
     fun teadDown() {
         mockWebServer.shutdown()
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.countingIdlingResource)
     }
 
     @Test
@@ -65,7 +69,6 @@ class RandomJokeTest {
         onView(withId(R.id.joke_list_button)).check(matches(isDisplayed()))
 
         onView(withId(R.id.random_joke_button)).perform(click())
-        Thread.sleep(8000)
         onView(withId(android.R.id.message)).check(matches(withText(JOKE_TEST)))
         onView(withText(DONE)).perform(click())
     }
