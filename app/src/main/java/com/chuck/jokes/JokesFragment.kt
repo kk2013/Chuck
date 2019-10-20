@@ -39,11 +39,9 @@ class JokesFragment : DaggerFragment() {
         binding.recyclerView.adapter = jokesAdapter
 
         jokesViewModel.jokesRepo.observe(this, Observer {
-            Log.i(LOG_TAG, "${it.size} jokes")
             jokesAdapter.submitList(it)
         })
         jokesViewModel.networkState?.observe(this, Observer {
-            Log.i(LOG_TAG, it.status.name)
             jokesAdapter.setNetworkState(it)
         })
 
