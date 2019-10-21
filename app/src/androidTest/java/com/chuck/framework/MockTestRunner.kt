@@ -7,7 +7,6 @@ import android.os.StrictMode
 import androidx.test.runner.AndroidJUnitRunner
 import com.chuck.ChuckTestApplication
 
-
 class MockTestRunner : AndroidJUnitRunner() {
     override fun onCreate(arguments: Bundle) {
         StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitAll().build())

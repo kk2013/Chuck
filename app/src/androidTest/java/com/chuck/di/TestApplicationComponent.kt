@@ -10,7 +10,6 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [AndroidSupportInjectionModule::class, TestNetworkModule::class, IntroModule::class, JokeModule::class, JokesModule::class])
-
 interface TestApplicationComponent : ApplicationComponent {
 
     fun getMockWebServer(): MockWebServer

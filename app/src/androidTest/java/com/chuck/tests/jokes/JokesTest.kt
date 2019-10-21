@@ -53,7 +53,7 @@ class JokesTest {
     }
 
     @After
-    fun teadDown() {
+    fun tearDown() {
         mockWebServer.shutdown()
         IdlingRegistry.getInstance().unregister(EspressoIdlingResource.countingIdlingResource)
     }

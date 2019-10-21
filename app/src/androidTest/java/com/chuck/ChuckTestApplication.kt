@@ -1,6 +1,5 @@
 package com.chuck
 
-import com.chuck.di.DaggerApplicationComponent
 import com.chuck.di.DaggerTestApplicationComponent
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
