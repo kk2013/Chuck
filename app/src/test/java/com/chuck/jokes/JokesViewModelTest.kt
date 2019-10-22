@@ -1,14 +1,9 @@
 package com.chuck.jokes
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.paging.DataSource
-import androidx.paging.PagedList
 import com.chuck.data.ChuckJokeRepository
 import com.chuck.data.JokesDataSource
 import com.chuck.data.JokesDataSourceFactory
-import com.chuck.data.NetworkState
-import com.chuck.model.Joke
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever

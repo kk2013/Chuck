@@ -30,10 +30,6 @@ class JokesDataSourceTest {
     @get:Rule
     val coroutineTestRule = TestCoroutineRule()
 
-    /*@Mock
-    private lateinit var mockInitialParams: PageKeyedDataSource.LoadInitialParams<Int>
-    @Mock
-    private lateinit var mockInitialCallback: PageKeyedDataSource.LoadInitialCallback<Int, Joke>*/
     @Mock
     private lateinit var mockInitialCallback: PageKeyedDataSource.LoadInitialCallback<Int, Joke>
     @Mock
