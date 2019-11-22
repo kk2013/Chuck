@@ -4,18 +4,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chuck.data.ChuckJokeRepository
-import com.chuck.di.CoroutineContextProvider
 import com.chuck.util.wrapEspressoIdlingResource
-import com.chuck.utils.Constants.Companion.TIMEOUT
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
 
 class IntroViewModel @Inject constructor(
-    private val jokeRepository: ChuckJokeRepository,
-    private val contextProvider: CoroutineContextProvider
+    private val jokeRepository: ChuckJokeRepository
 ) : ViewModel() {
 
     private val _state = MutableLiveData<IntroState>()
@@ -33,9 +28,7 @@ class IntroViewModel @Inject constructor(
         _state.value = IntroState.Loading
         wrapEspressoIdlingResource {
             try {
-                val jokeResponse = withTimeout(TIMEOUT) {
-                    jokeRepository.getRandomJoke()
-                }
+                val jokeResponse = jokeRepository.getRandomJoke()
                 delay(3000)
                 _state.value =
                     IntroState.Success(jokeResponse.value.joke)

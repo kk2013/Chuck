@@ -2,7 +2,6 @@ package com.chuck.joke
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.chuck.TestCoroutineContextProvider
 import com.chuck.TestCoroutineRule
 import com.chuck.data.ChuckJokeRepository
 import com.chuck.joke.JokeViewModel.JokeState.Failed
@@ -53,7 +52,7 @@ class JokeViewModelTest {
         observer = Observer {
             actualValues.plusAssign(it)
         }
-        jokeViewModel = JokeViewModel(mockJokeRepository, TestCoroutineContextProvider())
+        jokeViewModel = JokeViewModel(mockJokeRepository)
     }
 
     @After

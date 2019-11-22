@@ -4,17 +4,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chuck.data.ChuckJokeRepository
-import com.chuck.di.CoroutineContextProvider
 import com.chuck.util.wrapEspressoIdlingResource
-import com.chuck.utils.Constants.Companion.TIMEOUT
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
 
 class JokeViewModel @Inject constructor(
-    private val jokeRepository: ChuckJokeRepository,
-    private val contextProvider: CoroutineContextProvider
+    private val jokeRepository: ChuckJokeRepository
 ) : ViewModel() {
 
     private val _state = MutableLiveData<JokeState>()
@@ -38,9 +33,7 @@ class JokeViewModel @Inject constructor(
             _state.value = JokeState.Loading
             wrapEspressoIdlingResource {
                 try {
-                    val jokeResponse = withTimeout(TIMEOUT) {
-                        jokeRepository.getCustomNameJoke(names[1], names[2])
-                    }
+                    val jokeResponse = jokeRepository.getCustomNameJoke(names[1], names[2])
                     _state.value = JokeState.Success(jokeResponse.value.joke)
                 } catch (ex: Exception) {
                     ex.printStackTrace()

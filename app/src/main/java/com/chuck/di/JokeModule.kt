@@ -1,7 +1,6 @@
 package com.chuck.di
 
 import androidx.lifecycle.ViewModel
-import com.chuck.intro.IntroFragment
 import com.chuck.joke.JokeFragment
 import com.chuck.joke.JokeViewModel
 import dagger.Binds

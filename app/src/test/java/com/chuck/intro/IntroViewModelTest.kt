@@ -2,7 +2,6 @@ package com.chuck.intro
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.chuck.TestCoroutineContextProvider
 import com.chuck.TestCoroutineRule
 import com.chuck.data.ChuckJokeRepository
 import com.chuck.intro.IntroViewModel.IntroState.Failed
@@ -50,7 +49,7 @@ class IntroViewModelTest {
         observer = Observer {
             actualValues.plusAssign(it)
         }
-        introViewModel = IntroViewModel(mockJokeRepository, TestCoroutineContextProvider())
+        introViewModel = IntroViewModel(mockJokeRepository)
     }
 
     @After
