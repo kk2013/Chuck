@@ -5,27 +5,22 @@ import com.chuck.data.ChuckJokeRepository
 import com.chuck.data.JokesDataSource
 import com.chuck.data.JokesDataSourceFactory
 import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.MockitoAnnotations
 
 class JokesListViewModelTest {
     
-    @Mock
-    private lateinit var mockJokeRepository: ChuckJokeRepository
-    @Mock
-    private lateinit var mockDataSourceFactory: JokesDataSourceFactory
-    @Mock
-    private lateinit var mockRepo: MutableLiveData<JokesDataSource>
+    private var mockJokeRepository: ChuckJokeRepository = mock()
+    private var mockDataSourceFactory: JokesDataSourceFactory = mock()
+    private var mockRepo: MutableLiveData<JokesDataSource> = mock()
 
     private lateinit var jokesViewModel: JokesListViewModel
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
 
         whenever(mockJokeRepository.createDataSourceFactory()).thenReturn(mockDataSourceFactory)
         whenever(mockDataSourceFactory.jokesLiveData).thenReturn(mockRepo)

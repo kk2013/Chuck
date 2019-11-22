@@ -8,6 +8,7 @@ import com.chuck.api.ChuckJokeApi
 import com.chuck.model.Joke
 import com.chuck.model.JokesResponse
 import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
@@ -17,7 +18,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import retrofit2.HttpException
 
@@ -30,14 +30,10 @@ class JokesDataSourceTest {
     @get:Rule
     val coroutineTestRule = TestCoroutineRule()
 
-    @Mock
-    private lateinit var mockInitialCallback: PageKeyedDataSource.LoadInitialCallback<Int, Joke>
-    @Mock
-    private lateinit var mockCallback: PageKeyedDataSource.LoadCallback<Int, Joke>
-    @Mock
-    private lateinit var mockService: ChuckJokeApi
-    @Mock
-    lateinit var mockHttpException: HttpException
+    private var mockInitialCallback: PageKeyedDataSource.LoadInitialCallback<Int, Joke> = mock()
+    private var mockCallback: PageKeyedDataSource.LoadCallback<Int, Joke> = mock()
+    private var mockService: ChuckJokeApi = mock()
+    private var mockHttpException: HttpException = mock()
 
     private val mockInitialParams: PageKeyedDataSource.LoadInitialParams<Int> =
         PageKeyedDataSource.LoadInitialParams(2, true)

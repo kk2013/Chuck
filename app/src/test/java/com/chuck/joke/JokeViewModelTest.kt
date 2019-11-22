@@ -11,6 +11,7 @@ import com.chuck.joke.JokeViewModel.JokeState.Success
 import com.chuck.model.Joke
 import com.chuck.model.JokeResponse
 import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.After
@@ -20,8 +21,6 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.MockitoAnnotations
 import retrofit2.HttpException
 
 @ExperimentalCoroutinesApi
@@ -32,12 +31,9 @@ class JokeViewModelTest {
     @get:Rule
     val coroutineTestRule = TestCoroutineRule()
 
-    @Mock
-    lateinit var mockJokeRepository: ChuckJokeRepository
-    @Mock
-    lateinit var mockJokeResponse: JokeResponse
-    @Mock
-    lateinit var mockHttpException: HttpException
+    private var mockJokeRepository: ChuckJokeRepository = mock()
+    private var mockJokeResponse: JokeResponse = mock()
+    private var mockHttpException: HttpException = mock()
 
     private lateinit var observer: Observer<JokeViewModel.JokeState>
 
@@ -47,7 +43,6 @@ class JokeViewModelTest {
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
 
         observer = Observer {
             actualValues.plusAssign(it)
