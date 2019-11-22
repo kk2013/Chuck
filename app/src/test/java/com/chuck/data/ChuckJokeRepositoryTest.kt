@@ -1,18 +1,16 @@
 package com.chuck.data
 
 import com.chuck.api.ChuckJokeApi
+import com.nhaarman.mockito_kotlin.mock
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 
 class ChuckJokeRepositoryTest {
 
-    @Mock
-    private lateinit var mockService: ChuckJokeApi
-    @Mock
-    private lateinit var mockDataSourceFactory: JokesDataSourceFactory
+    private var mockService: ChuckJokeApi = mock()
+    private var mockDataSourceFactory: JokesDataSourceFactory = mock()
 
     private lateinit var chuckRepo: ChuckJokeRepository
 
