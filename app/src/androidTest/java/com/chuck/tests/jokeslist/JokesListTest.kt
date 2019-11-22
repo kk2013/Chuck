@@ -1,12 +1,10 @@
-package com.chuck.tests.jokes
+package com.chuck.tests.jokeslist
 
 import android.content.Intent
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.hasChildCount
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
@@ -29,7 +27,7 @@ import org.junit.runner.RunWith
 import org.junit.Rule
 
 @RunWith(AndroidJUnit4::class)
-class JokesTest {
+class JokesListTest {
 
     @get:Rule
     var activityRule: ActivityTestRule<IntroActivity> = ActivityTestRule(IntroActivity::class.java)
