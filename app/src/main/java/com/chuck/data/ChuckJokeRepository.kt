@@ -9,12 +9,12 @@ import java.util.concurrent.Executors
 import javax.inject.Inject
 
 class ChuckJokeRepository @Inject constructor(
-    private val service: ChuckJokeApi
+    private val chuckJokeApi: ChuckJokeApi
 ) {
-    suspend fun getRandomJoke() = service.getRandomJoke()
+    suspend fun getRandomJoke() = chuckJokeApi.getRandomJoke()
 
     suspend fun getCustomNameJoke(firstName: String, lastName: String) =
-        service.getCustomNameJoke(firstName, lastName)
+        chuckJokeApi.getCustomNameJoke(firstName, lastName)
 
     fun getJokes(dataSourceFactory: JokesDataSourceFactory): LiveData<PagedList<Joke>> {
         val pagedListConfig = PagedList.Config.Builder()
@@ -31,7 +31,7 @@ class ChuckJokeRepository @Inject constructor(
     }
 
     fun createDataSourceFactory(): JokesDataSourceFactory {
-        return JokesDataSourceFactory(service)
+        return JokesDataSourceFactory(chuckJokeApi)
     }
 
     companion object {
