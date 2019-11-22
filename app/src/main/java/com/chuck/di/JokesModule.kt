@@ -1,8 +1,8 @@
 package com.chuck.di
 
 import androidx.lifecycle.ViewModel
-import com.chuck.jokes.JokesFragment
-import com.chuck.jokes.JokesViewModel
+import com.chuck.jokeslist.JokesListFragment
+import com.chuck.jokeslist.JokesListViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -14,10 +14,10 @@ abstract class JokesModule {
     @ContributesAndroidInjector(modules = [
         ViewModelBuilder::class
     ])
-    internal abstract fun jokesFragment(): JokesFragment
+    internal abstract fun jokesFragment(): JokesListFragment
 
     @Binds
     @IntoMap
-    @ViewModelKey(JokesViewModel::class)
-    abstract fun bindViewModel(viewModel: JokesViewModel): ViewModel
+    @ViewModelKey(JokesListViewModel::class)
+    abstract fun bindViewModel(viewModel: JokesListViewModel): ViewModel
 }

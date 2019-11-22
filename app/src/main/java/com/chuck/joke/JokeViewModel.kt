@@ -39,9 +39,7 @@ class JokeViewModel @Inject constructor(
             wrapEspressoIdlingResource {
                 try {
                     val jokeResponse = withTimeout(TIMEOUT) {
-                        withContext(contextProvider.IO) {
-                            jokeRepository.getCustomNameJoke(names[1], names[2])
-                        }
+                        jokeRepository.getCustomNameJoke(names[1], names[2])
                     }
                     _state.value = JokeState.Success(jokeResponse.value.joke)
                 } catch (ex: Exception) {

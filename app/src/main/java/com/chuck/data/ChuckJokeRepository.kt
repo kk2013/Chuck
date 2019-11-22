@@ -3,13 +3,13 @@ package com.chuck.data
 import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.chuck.api.ChuckJokeService
+import com.chuck.api.ChuckJokeApi
 import com.chuck.model.Joke
 import java.util.concurrent.Executors
 import javax.inject.Inject
 
 class ChuckJokeRepository @Inject constructor(
-    private val service: ChuckJokeService
+    private val service: ChuckJokeApi
 ) {
     suspend fun getRandomJoke() = service.getRandomJoke()
 

@@ -29,7 +29,6 @@ class IntroActivity : AppCompatActivity() {
 
         val navController = findNavController(this, R.id.nav_fragment)
 
-        // Set up ActionBar
         setSupportActionBar(binding.toolbar)
         appBarConfiguration =
             AppBarConfiguration.Builder(R.id.main_fragment)

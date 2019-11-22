@@ -1,7 +1,7 @@
 package com.chuck.di
 
 import com.chuck.BuildConfig
-import com.chuck.api.ChuckJokeService
+import com.chuck.api.ChuckJokeApi
 import com.chuck.utils.LiveDataCallAdapterFactory
 import dagger.Module
 import dagger.Provides
@@ -42,6 +42,6 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun providesChuckService(retrofit: Retrofit): ChuckJokeService =
-        retrofit.create(ChuckJokeService::class.java)
+    fun providesChuckService(retrofit: Retrofit): ChuckJokeApi =
+        retrofit.create(ChuckJokeApi::class.java)
 }

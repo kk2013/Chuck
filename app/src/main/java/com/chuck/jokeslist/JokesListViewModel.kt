@@ -1,4 +1,4 @@
-package com.chuck.jokes
+package com.chuck.jokeslist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations.switchMap
@@ -10,7 +10,7 @@ import com.chuck.data.NetworkState
 import com.chuck.model.Joke
 import javax.inject.Inject
 
-class JokesViewModel @Inject constructor(jokeRepository: ChuckJokeRepository
+class JokesListViewModel @Inject constructor(jokeRepository: ChuckJokeRepository
 ) : ViewModel() {
 
     private val dataSourceFactory: JokesDataSourceFactory = jokeRepository.createDataSourceFactory()

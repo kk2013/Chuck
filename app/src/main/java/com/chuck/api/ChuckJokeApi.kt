@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface ChuckJokeService {
+interface ChuckJokeApi {
 
     @GET("/jokes/random?escape=javascript")
     suspend fun getRandomJoke(): JokeResponse

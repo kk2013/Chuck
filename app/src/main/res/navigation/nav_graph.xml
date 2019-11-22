@@ -9,7 +9,7 @@
         android:label="Joke" />
     <fragment
         android:id="@+id/jokes_fragment"
-        android:name="com.chuck.jokes.JokesFragment"
+        android:name="com.chuck.jokeslist.JokesListFragment"
         android:label="Jokes" />
     <fragment
         android:id="@+id/main_fragment"

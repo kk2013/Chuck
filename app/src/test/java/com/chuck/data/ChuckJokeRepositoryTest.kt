@@ -1,6 +1,6 @@
 package com.chuck.data
 
-import com.chuck.api.ChuckJokeService
+import com.chuck.api.ChuckJokeApi
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
@@ -10,7 +10,7 @@ import org.mockito.MockitoAnnotations
 class ChuckJokeRepositoryTest {
 
     @Mock
-    private lateinit var mockService: ChuckJokeService
+    private lateinit var mockService: ChuckJokeApi
     @Mock
     private lateinit var mockDataSourceFactory: JokesDataSourceFactory
 

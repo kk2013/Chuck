@@ -1,4 +1,4 @@
-package com.chuck.jokes
+package com.chuck.jokeslist
 
 import androidx.lifecycle.MutableLiveData
 import com.chuck.data.ChuckJokeRepository
@@ -21,7 +21,7 @@ class JokesViewModelTest {
     @Mock
     private lateinit var mockRepo: MutableLiveData<JokesDataSource>
 
-    private lateinit var jokesViewModel: JokesViewModel
+    private lateinit var jokesViewModel: JokesListViewModel
 
     @Before
     fun setUp() {
@@ -33,7 +33,7 @@ class JokesViewModelTest {
 
     @Test
     fun `init`() {
-        jokesViewModel = JokesViewModel(mockJokeRepository)
+        jokesViewModel = JokesListViewModel(mockJokeRepository)
 
         verify(mockJokeRepository).createDataSourceFactory()
         verify(mockJokeRepository).getJokes(any())

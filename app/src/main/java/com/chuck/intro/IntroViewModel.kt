@@ -34,9 +34,7 @@ class IntroViewModel @Inject constructor(
         wrapEspressoIdlingResource {
             try {
                 val jokeResponse = withTimeout(TIMEOUT) {
-                    withContext(contextProvider.IO) {
-                        jokeRepository.getRandomJoke()
-                    }
+                    jokeRepository.getRandomJoke()
                 }
                 delay(3000)
                 _state.value =

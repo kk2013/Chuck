@@ -2,13 +2,13 @@ package com.chuck.data
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
-import com.chuck.api.ChuckJokeService
+import com.chuck.api.ChuckJokeApi
 import com.chuck.model.Joke
 import com.chuck.util.wrapEspressoIdlingResource
 import kotlinx.coroutines.runBlocking
 
 class JokesDataSource(
-    private val service: ChuckJokeService
+    private val service: ChuckJokeApi
 ) : PageKeyedDataSource<Int, Joke>() {
 
     val networkState = MutableLiveData<NetworkState>()

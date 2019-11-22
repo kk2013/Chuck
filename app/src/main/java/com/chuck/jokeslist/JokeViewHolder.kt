@@ -1,4 +1,4 @@
-package com.chuck.jokes
+package com.chuck.jokeslist
 
 import android.view.LayoutInflater
 import android.view.View

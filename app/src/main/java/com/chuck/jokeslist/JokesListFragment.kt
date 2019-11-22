@@ -1,7 +1,6 @@
-package com.chuck.jokes
+package com.chuck.jokeslist
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,12 +13,12 @@ import com.chuck.di.ChuckViewModelFactory
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class JokesFragment : DaggerFragment() {
+class JokesListFragment : DaggerFragment() {
 
     @Inject
     lateinit var viewModelFactory: ChuckViewModelFactory
 
-    private val jokesViewModel: JokesViewModel by viewModels {
+    private val jokesViewModel: JokesListViewModel by viewModels {
         viewModelFactory
     }
 

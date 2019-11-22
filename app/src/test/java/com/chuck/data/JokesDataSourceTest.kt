@@ -3,8 +3,7 @@ package com.chuck.data
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import androidx.paging.PageKeyedDataSource
-import com.chuck.TestCoroutineRule
-import com.chuck.api.ChuckJokeService
+import com.chuck.api.ChuckJokeApi
 import com.chuck.model.Joke
 import com.chuck.model.JokesResponse
 import com.nhaarman.mockito_kotlin.any
@@ -28,14 +27,14 @@ class JokesDataSourceTest {
     val instantTaskExecutorRule = InstantTaskExecutorRule()
     @ExperimentalCoroutinesApi
     @get:Rule
-    val coroutineTestRule = TestCoroutineRule()
+    vcoroutineTestRule = TestCoroutineRule()
 
     @Mock
     private lateinit var mockInitialCallback: PageKeyedDataSource.LoadInitialCallback<Int, Joke>
     @Mock
     private lateinit var mockCallback: PageKeyedDataSource.LoadCallback<Int, Joke>
     @Mock
-    private lateinit var mockService: ChuckJokeService
+    private lateinit var mockService: ChuckJokeApi
     @Mock
     lateinit var mockHttpException: HttpException
 
