@@ -72,24 +72,11 @@ class JokesAdapter
     }
 
     companion object {
-        private const val LOG_TAG = "Adapter"
 
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Joke>() {
             override fun areItemsTheSame(oldItem: Joke, newItem: Joke) = oldItem.id == newItem.id
 
             override fun areContentsTheSame(oldItem: Joke, newItem: Joke) = oldItem == newItem
-        }
-    }
-
-    class ProgressViewHolder(view: View) :
-        RecyclerView.ViewHolder(view) {
-
-        companion object {
-            fun create(parent: ViewGroup): ProgressViewHolder {
-                val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.progress_item_row, parent, false)
-                return ProgressViewHolder(view)
-            }
         }
     }
 }

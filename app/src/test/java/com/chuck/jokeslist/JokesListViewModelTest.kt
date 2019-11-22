@@ -12,7 +12,7 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 
-class JokesViewModelTest {
+class JokesListViewModelTest {
     
     @Mock
     private lateinit var mockJokeRepository: ChuckJokeRepository
