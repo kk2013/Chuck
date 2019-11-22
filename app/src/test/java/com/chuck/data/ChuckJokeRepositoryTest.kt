@@ -5,7 +5,6 @@ import com.nhaarman.mockito_kotlin.mock
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
-import org.mockito.MockitoAnnotations
 
 class ChuckJokeRepositoryTest {
 
@@ -16,8 +15,6 @@ class ChuckJokeRepositoryTest {
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
-
         chuckRepo = ChuckJokeRepository(mockService)
     }
 
