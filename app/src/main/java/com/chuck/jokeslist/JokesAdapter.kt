@@ -11,7 +11,7 @@ import com.chuck.model.Joke
 class JokesAdapter
     : PagedListAdapter<Joke, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
-    private var networkState: NetworkState? = NetworkState.LOADING
+    private var networkState: NetworkState = NetworkState.LOADING
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (getItemViewType(position) == R.layout.joke_item_row) {
@@ -28,23 +28,24 @@ class JokesAdapter
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (hasExtraRow() && position == itemCount - 1) {
+        return if (hasExtraRow(networkState) && position == itemCount - 1) {
             R.layout.progress_item_row
         } else {
             R.layout.joke_item_row
         }
     }
 
-    override fun getItemCount(): Int = super.getItemCount() + if (hasExtraRow()) 1 else 0
+    override fun getItemCount(): Int =
+        super.getItemCount() + if (hasExtraRow(networkState)) 1 else 0
 
-    private fun hasExtraRow(): Boolean =
-        networkState != null && networkState != NetworkState.SUCCESS
+    private fun hasExtraRow(state: NetworkState): Boolean =
+        state != NetworkState.SUCCESS
 
-    fun setNetworkState(newNetworkState: NetworkState?) {
+    fun setNetworkState(newNetworkState: NetworkState) {
         val previousState = this.networkState
-        val hadExtraRow = hasExtraRow()
+        val hadExtraRow = hasExtraRow(previousState)
         this.networkState = newNetworkState
-        val hasExtraRow = hasExtraRow()
+        val hasExtraRow = hasExtraRow(networkState)
         if (hadExtraRow != hasExtraRow) {
             if (hadExtraRow) {
                 notifyItemRemoved(super.getItemCount())

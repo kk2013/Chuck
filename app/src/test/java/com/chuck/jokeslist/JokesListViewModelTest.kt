@@ -12,7 +12,7 @@ import org.junit.Before
 import org.junit.Test
 
 class JokesListViewModelTest {
-    
+
     private var mockJokeRepository: ChuckJokeRepository = mock()
     private var mockDataSourceFactory: JokesDataSourceFactory = mock()
     private var mockRepo: MutableLiveData<JokesDataSource> = mock()
@@ -27,7 +27,7 @@ class JokesListViewModelTest {
     }
 
     @Test
-    fun `init`() {
+    fun `when the jokes view model is created then the datasource is set up and the jokes retrieved`() {
         jokesViewModel = JokesListViewModel(mockJokeRepository)
 
         verify(mockJokeRepository).createDataSourceFactory()

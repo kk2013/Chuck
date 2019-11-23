@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.chuck.databinding.FragmentJokesBinding
 import com.chuck.di.ChuckViewModelFactory
 import dagger.android.support.DaggerFragment
@@ -22,7 +21,6 @@ class JokesListFragment : DaggerFragment() {
         viewModelFactory
     }
 
-    private lateinit var layoutManager: RecyclerView.LayoutManager
     private val jokesAdapter: JokesAdapter = JokesAdapter()
 
     override fun onCreateView(
@@ -33,7 +31,7 @@ class JokesListFragment : DaggerFragment() {
 
         val binding = FragmentJokesBinding.inflate(inflater, container, false)
 
-        layoutManager = LinearLayoutManager(activity)
+        val layoutManager = LinearLayoutManager(activity)
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = jokesAdapter
 
@@ -45,9 +43,5 @@ class JokesListFragment : DaggerFragment() {
         })
 
         return binding.root
-    }
-
-    companion object {
-        private const val LOG_TAG = "Jokes Fragment"
     }
 }
