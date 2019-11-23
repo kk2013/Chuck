@@ -1,30 +1,22 @@
 package com.chuck.tests.jokeslist
 
 import android.content.Intent
-import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.chuck.ChuckApplication
-import com.chuck.R
 import com.chuck.di.DaggerTestApplicationComponent
 import com.chuck.intro.IntroActivity
+import com.chuck.robots.IntroRobot
 import com.chuck.util.EspressoIdlingResource
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
-
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-
-import org.junit.Rule
 
 @RunWith(AndroidJUnit4::class)
 class JokesListTest {
@@ -66,19 +58,8 @@ class JokesListTest {
                 }
         mockWebServer.enqueue(MockResponse().setResponseCode(200).setBody(response))
 
-        onView(withId(R.id.random_joke_button)).check(matches(isDisplayed()))
-        onView(withId(R.id.custom_name_button)).check(matches(isDisplayed()))
-        onView(withId(R.id.joke_list_button)).check(matches(isDisplayed()))
-
-        onView(withId(R.id.joke_list_button)).perform(click())
-
-        onView(withId(R.id.recycler_view)).check(matches(isDisplayed()))
-        onView(withText(JOKE_1_TEXT)).check(matches(isDisplayed()))
-        onView(withText(JOKE_4_TEXT)).check(matches(isDisplayed()))
-    }
-
-    companion object {
-        const val JOKE_1_TEXT = "Chuck Norris joke 1"
-        const val JOKE_4_TEXT = "Chuck Norris joke 4"
+        IntroRobot().checkIntroScreen()
+            .selectJokesList()
+            .checkJokes()
     }
 }
