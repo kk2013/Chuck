@@ -1,6 +1,8 @@
-package com.chuck.di
+package com.chuck.intro.di
 
 import androidx.lifecycle.ViewModel
+import com.chuck.di.ViewModelBuilder
+import com.chuck.di.ViewModelKey
 import com.chuck.intro.IntroFragment
 import com.chuck.intro.IntroViewModel
 import dagger.Binds

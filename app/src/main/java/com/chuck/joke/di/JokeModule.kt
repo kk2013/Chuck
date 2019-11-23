@@ -1,6 +1,8 @@
-package com.chuck.di
+package com.chuck.joke.di
 
 import androidx.lifecycle.ViewModel
+import com.chuck.di.ViewModelBuilder
+import com.chuck.di.ViewModelKey
 import com.chuck.joke.JokeFragment
 import com.chuck.joke.JokeViewModel
 import dagger.Binds

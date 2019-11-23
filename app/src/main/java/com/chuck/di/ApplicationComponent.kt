@@ -1,8 +1,10 @@
 package com.chuck.di
 
-import android.app.Application
 import android.content.Context
 import com.chuck.ChuckApplication
+import com.chuck.intro.di.IntroModule
+import com.chuck.joke.di.JokeModule
+import com.chuck.jokeslist.di.JokesModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
