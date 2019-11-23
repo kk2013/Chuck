@@ -1,17 +1,8 @@
 package com.chuck.data
 
-enum class Status {
-    LOADING,
-    SUCCESS,
-    FAILED
-}
+sealed class NetworkState {
+    object Success : NetworkState()
+    object Loading : NetworkState()
+    object Failed : NetworkState()
 
-@Suppress("DataClassPrivateConstructor")
-data class NetworkState private constructor(
-    val status: Status) {
-    companion object {
-        val SUCCESS = NetworkState(Status.SUCCESS)
-        val LOADING = NetworkState(Status.LOADING)
-        val FAILED = NetworkState(Status.FAILED)
-    }
 }

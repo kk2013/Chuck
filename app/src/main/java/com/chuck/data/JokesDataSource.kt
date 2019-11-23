@@ -20,12 +20,12 @@ class JokesDataSource(
         wrapEspressoIdlingResource {
             runBlocking {
                 try {
-                    networkState.postValue(NetworkState.LOADING)
+                    networkState.postValue(NetworkState.Loading)
                     val jokes = service.getJokes(NUMBER_OF_JOKES, 1, params.requestedLoadSize)
                     callback.onResult(jokes.value, null, 2)
-                    networkState.postValue(NetworkState.SUCCESS)
+                    networkState.postValue(NetworkState.Success)
                 } catch (ex: Exception) {
-                    networkState.postValue(NetworkState.FAILED)
+                    networkState.postValue(NetworkState.Failed)
                 }
             }
         }
@@ -39,13 +39,13 @@ class JokesDataSource(
         wrapEspressoIdlingResource {
             runBlocking {
                 try {
-                    networkState.postValue(NetworkState.LOADING)
+                    networkState.postValue(NetworkState.Loading)
                     val page = params.key
                     val jokes = service.getJokes(NUMBER_OF_JOKES, page, params.requestedLoadSize)
                     callback.onResult(jokes.value, page + 1)
-                    networkState.postValue(NetworkState.SUCCESS)
+                    networkState.postValue(NetworkState.Success)
                 } catch (ex: Exception) {
-                    networkState.postValue(NetworkState.FAILED)
+                    networkState.postValue(NetworkState.Failed)
                 }
             }
         }

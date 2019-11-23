@@ -5,7 +5,6 @@ import androidx.lifecycle.Observer
 import com.chuck.TestCoroutineRule
 import com.chuck.data.ChuckJokeRepository
 import com.chuck.intro.IntroViewModel.IntroState.Failed
-import com.chuck.intro.IntroViewModel.IntroState.Loaded
 import com.chuck.intro.IntroViewModel.IntroState.Loading
 import com.chuck.intro.IntroViewModel.IntroState.Success
 import com.chuck.model.Joke
@@ -53,40 +52,40 @@ class IntroViewModelTest {
     }
 
     @Test
-    fun `the correct states are set when an exception is thrown by the joke repo`() = coroutineTestRule.runBlockingTest {
+    fun `the correct states are set when an exception is thrown by the joke repo`() =
+        coroutineTestRule.runBlockingTest {
 
-        val joke = Joke(1, "Some Chuck joke", emptyList())
+            val joke = Joke(1, "Some Chuck joke", emptyList())
 
-        whenever(mockJokeRepository.getRandomJoke()).thenThrow(mockHttpException)
-        whenever(mockJokeResponse.value).thenReturn(joke)
+            whenever(mockJokeRepository.getRandomJoke()).thenThrow(mockHttpException)
+            whenever(mockJokeResponse.value).thenReturn(joke)
 
-        introViewModel.state.observeForever(observer)
+            introViewModel.state.observeForever(observer)
 
-        introViewModel.loadJoke()
+            introViewModel.loadJoke()
 
-        assertEquals(3, actualValues.size)
-        assertEquals(Loading, actualValues[0])
-        assertEquals(Failed, actualValues[1])
-        assertEquals(Loaded, actualValues[2])
-    }
+            assertEquals(2, actualValues.size)
+            assertEquals(Loading, actualValues[0])
+            assertEquals(Failed, actualValues[1])
+        }
 
     @Test
-    fun `the correct states are set when a success response is returned by the joke repo`() = coroutineTestRule.runBlockingTest {
+    fun `the correct states are set when a success response is returned by the joke repo`() =
+        coroutineTestRule.runBlockingTest {
 
-        val joke = Joke(1, "Some Chuck joke", emptyList())
+            val joke = Joke(1, "Some Chuck joke", emptyList())
 
-        whenever(mockJokeRepository.getRandomJoke()).thenReturn(mockJokeResponse)
-        whenever(mockJokeResponse.value).thenReturn(joke)
+            whenever(mockJokeRepository.getRandomJoke()).thenReturn(mockJokeResponse)
+            whenever(mockJokeResponse.value).thenReturn(joke)
 
-        introViewModel.state.observeForever(observer)
+            introViewModel.state.observeForever(observer)
 
-        introViewModel.loadJoke()
+            introViewModel.loadJoke()
 
-        coroutineTestRule.advanceTime(3000)
+            coroutineTestRule.advanceTime(3000)
 
-        assertEquals(3, actualValues.size)
-        assertEquals(Loading, actualValues[0])
-        assertEquals(Success(joke.joke), actualValues[1])
-        assertEquals(Loaded, actualValues[2])
-    }
+            assertEquals(2, actualValues.size)
+            assertEquals(Loading, actualValues[0])
+            assertEquals(Success(joke.joke), actualValues[1])
+        }
 }

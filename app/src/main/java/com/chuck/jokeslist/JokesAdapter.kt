@@ -11,7 +11,7 @@ import com.chuck.model.Joke
 class JokesAdapter
     : PagedListAdapter<Joke, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
-    private var networkState: NetworkState = NetworkState.LOADING
+    private var networkState: NetworkState = NetworkState.Loading
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (getItemViewType(position) == R.layout.joke_item_row) {
@@ -39,7 +39,7 @@ class JokesAdapter
         super.getItemCount() + if (hasExtraRow(networkState)) 1 else 0
 
     private fun hasExtraRow(state: NetworkState): Boolean =
-        state != NetworkState.SUCCESS
+        state != NetworkState.Success
 
     fun setNetworkState(newNetworkState: NetworkState) {
         val previousState = this.networkState
