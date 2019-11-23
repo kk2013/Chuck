@@ -53,6 +53,5 @@ class JokesDataSource(
 
     companion object {
         private const val NUMBER_OF_JOKES = 12
-        private const val LOG_TAG = "Data source"
     }
 }

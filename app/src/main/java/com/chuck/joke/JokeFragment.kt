@@ -36,10 +36,10 @@ class JokeFragment : DaggerFragment() {
 
         jokeViewModel.state.observe(this, Observer {
             when (it) {
-                is JokeViewModel.JokeState.Loading -> binding.progressBar.visibility = View.VISIBLE
-                is JokeViewModel.JokeState.Loaded -> binding.progressBar.visibility = View.GONE
-                is JokeViewModel.JokeState.Failed -> showDialog(getString(R.string.no_data))
-                is JokeViewModel.JokeState.InvalidName -> showDialog(getString(R.string.invalid_name))
+                JokeViewModel.JokeState.Loading -> binding.progressBar.visibility = View.VISIBLE
+                JokeViewModel.JokeState.Loaded -> binding.progressBar.visibility = View.GONE
+                JokeViewModel.JokeState.Failed -> showDialog(getString(R.string.no_data))
+                JokeViewModel.JokeState.InvalidName -> showDialog(getString(R.string.invalid_name))
                 is JokeViewModel.JokeState.Success -> {
                     showDialog(it.jokeText)
                 }

@@ -13,29 +13,25 @@ class IntroViewModel @Inject constructor(
     private val jokeRepository: ChuckJokeRepository
 ) : ViewModel() {
 
-    private val _state = MutableLiveData<IntroState>()
-    val state: MutableLiveData<IntroState>
-        get() = _state
+    internal val state = MutableLiveData<IntroState>()
 
     sealed class IntroState {
         object Loading : IntroState()
-        object Loaded : IntroState()
         object Failed : IntroState()
         data class Success(val jokeText: String) : IntroState()
     }
 
     fun loadJoke() = viewModelScope.launch {
-        _state.value = IntroState.Loading
+        state.value = IntroState.Loading
         wrapEspressoIdlingResource {
-            try {
+            state.value = try {
                 val jokeResponse = jokeRepository.getRandomJoke()
+                //Intentionally slow down to simulate network delay
                 delay(3000)
-                _state.value =
-                    IntroState.Success(jokeResponse.value.joke)
+                IntroState.Success(jokeResponse.value.joke)
             } catch (ex: Exception) {
-                _state.value = IntroState.Failed
+                IntroState.Failed
             }
         }
-        _state.value = IntroState.Loaded
     }
 }

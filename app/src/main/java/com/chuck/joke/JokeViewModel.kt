@@ -12,9 +12,7 @@ class JokeViewModel @Inject constructor(
     private val jokeRepository: ChuckJokeRepository
 ) : ViewModel() {
 
-    private val _state = MutableLiveData<JokeState>()
-    val state: MutableLiveData<JokeState>
-        get() = _state
+    internal val state = MutableLiveData<JokeState>()
 
     sealed class JokeState {
         object Loading : JokeState()
@@ -28,18 +26,18 @@ class JokeViewModel @Inject constructor(
     fun loadJoke(name: String) = viewModelScope.launch {
         val names = validName(name)
         if (names.isEmpty()) {
-            _state.value = JokeState.InvalidName
+            state.value = JokeState.InvalidName
         } else {
-            _state.value = JokeState.Loading
+            state.value = JokeState.Loading
             wrapEspressoIdlingResource {
-                try {
+                state.value = try {
                     val jokeResponse = jokeRepository.getCustomNameJoke(names[1], names[2])
-                    _state.value = JokeState.Success(jokeResponse.value.joke)
+                    JokeState.Success(jokeResponse.value.joke)
                 } catch (ex: Exception) {
                     ex.printStackTrace()
-                    _state.value = JokeState.Failed
+                    JokeState.Failed
                 }
-                _state.value = JokeState.Loaded
+                state.value = JokeState.Loaded
             }
         }
     }

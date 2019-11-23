@@ -1,7 +1,5 @@
 package com.chuck.jokeslist
 
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -16,22 +14,8 @@ class JokesAdapter
     private var networkState: NetworkState? = NetworkState.LOADING
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (getItemViewType(position)) {
-            R.layout.joke_item_row -> (holder as JokeViewHolder).bind(getItem(position))
-            R.layout.progress_item_row -> (holder as ProgressViewHolder)
-        }
-    }
-
-    override fun onBindViewHolder(
-        holder: RecyclerView.ViewHolder,
-        position: Int,
-        payloads: MutableList<Any>
-    ) {
-        if (payloads.isNotEmpty()) {
-            val joke = getItem(position)
-            (holder as JokeViewHolder).bind(joke)
-        } else {
-            onBindViewHolder(holder, position)
+        if (getItemViewType(position) == R.layout.joke_item_row) {
+            (holder as JokeViewHolder).bind(getItem(position))
         }
     }
 
@@ -53,7 +37,8 @@ class JokesAdapter
 
     override fun getItemCount(): Int = super.getItemCount() + if (hasExtraRow()) 1 else 0
 
-    private fun hasExtraRow(): Boolean = networkState != null && networkState != NetworkState.SUCCESS
+    private fun hasExtraRow(): Boolean =
+        networkState != null && networkState != NetworkState.SUCCESS
 
     fun setNetworkState(newNetworkState: NetworkState?) {
         val previousState = this.networkState

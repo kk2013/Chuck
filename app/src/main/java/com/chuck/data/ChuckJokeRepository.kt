@@ -5,15 +5,16 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.chuck.api.ChuckJokeApi
 import com.chuck.model.Joke
+import com.chuck.model.JokeResponse
 import java.util.concurrent.Executors
 import javax.inject.Inject
 
 class ChuckJokeRepository @Inject constructor(
     private val chuckJokeApi: ChuckJokeApi
 ) {
-    suspend fun getRandomJoke() = chuckJokeApi.getRandomJoke()
+    suspend fun getRandomJoke(): JokeResponse = chuckJokeApi.getRandomJoke()
 
-    suspend fun getCustomNameJoke(firstName: String, lastName: String) =
+    suspend fun getCustomNameJoke(firstName: String, lastName: String): JokeResponse =
         chuckJokeApi.getCustomNameJoke(firstName, lastName)
 
     fun getJokes(dataSourceFactory: JokesDataSourceFactory): LiveData<PagedList<Joke>> {

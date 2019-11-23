@@ -1,7 +1,6 @@
 package com.chuck.intro
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -40,11 +39,14 @@ class IntroFragment : DaggerFragment() {
 
         introViewModel.state.observe(this, Observer {
             when (it) {
-                is IntroViewModel.IntroState.Loading -> binding.progressBar.visibility =
+                IntroViewModel.IntroState.Loading -> binding.progressBar.visibility =
                     View.VISIBLE
-                is IntroViewModel.IntroState.Loaded -> binding.progressBar.visibility = View.GONE
-                is IntroViewModel.IntroState.Failed -> showDialog(getString(R.string.no_data))
+                IntroViewModel.IntroState.Failed -> {
+                    binding.progressBar.visibility = View.GONE
+                    showDialog(getString(R.string.no_data))
+                }
                 is IntroViewModel.IntroState.Success -> {
+                    binding.progressBar.visibility = View.GONE
                     showDialog(it.jokeText)
                 }
             }
@@ -57,7 +59,7 @@ class IntroFragment : DaggerFragment() {
         AlertDialog.Builder(activity)
             .setCancelable(true)
             .setMessage(jokeText)
-            .setNegativeButton(getString(R.string.done)) { dialog, which ->
+            .setNegativeButton(getString(R.string.done)) { dialog, _ ->
                 dialog.dismiss()
             }
             .create()
