@@ -8,8 +8,8 @@ import com.chuck.R
 import com.chuck.data.NetworkState
 import com.chuck.model.Joke
 
-class JokesAdapter
-    : PagedListAdapter<Joke, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
+class JokesAdapter :
+    PagedListAdapter<Joke, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
     private var networkState: NetworkState = NetworkState.Loading
 

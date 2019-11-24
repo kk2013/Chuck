@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chuck.data.ChuckJokeRepository
 import com.chuck.util.wrapEspressoIdlingResource
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 class JokeViewModel @Inject constructor(
     private val jokeRepository: ChuckJokeRepository

@@ -5,12 +5,12 @@ import com.chuck.api.ChuckJokeApi
 import com.chuck.utils.LiveDataCallAdapterFactory
 import dagger.Module
 import dagger.Provides
+import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
-import javax.inject.Singleton
 
 @Module
 class NetworkModule {
@@ -18,7 +18,7 @@ class NetworkModule {
     private val BASE_URL = "http://api.icndb.com"
 
     private val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
-        this.level = if(BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.BASIC
+        this.level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.BASIC
     }
 
     @Provides

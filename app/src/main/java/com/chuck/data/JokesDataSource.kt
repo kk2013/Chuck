@@ -32,7 +32,7 @@ class JokesDataSource(
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Joke>) {
-        //Not required as will only load after the initial load
+        // Not required as will only load after the initial load
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Joke>) {

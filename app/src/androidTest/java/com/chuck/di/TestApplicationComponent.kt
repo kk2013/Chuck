@@ -8,8 +8,8 @@ import com.chuck.jokeslist.di.JokesModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
-import okhttp3.mockwebserver.MockWebServer
 import javax.inject.Singleton
+import okhttp3.mockwebserver.MockWebServer
 
 @Singleton
 @Component(modules = [AndroidSupportInjectionModule::class, TestNetworkModule::class, IntroModule::class, JokeModule::class, JokesModule::class])

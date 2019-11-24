@@ -1,7 +1,7 @@
 package com.chuck.utils
 
-import retrofit2.Response
 import java.util.regex.Pattern
+import retrofit2.Response
 
 /**
  * Common class used by API responses.
@@ -84,7 +84,6 @@ data class ApiSuccessResponse<T>(
             }
             return links
         }
-
     }
 }
 

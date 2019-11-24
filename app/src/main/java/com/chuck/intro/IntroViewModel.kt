@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chuck.data.ChuckJokeRepository
 import com.chuck.util.wrapEspressoIdlingResource
+import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 class IntroViewModel @Inject constructor(
     private val jokeRepository: ChuckJokeRepository
@@ -26,7 +26,7 @@ class IntroViewModel @Inject constructor(
         wrapEspressoIdlingResource {
             state.value = try {
                 val jokeResponse = jokeRepository.getRandomJoke()
-                //Intentionally slow down to simulate network delay
+                // Intentionally slow down to simulate network delay
                 delay(3000)
                 IntroState.Success(jokeResponse.value.joke)
             } catch (ex: Exception) {
